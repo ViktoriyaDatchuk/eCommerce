@@ -3,14 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'airbnb',
-    'plugin:prettier/recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb', 'plugin:prettier/recommended'],
   overrides: [
     {
       env: {
@@ -27,6 +20,12 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react'],
-  rules: {},
+  plugins: ['@typescript-eslint', 'prettier'],
+  rules: {
+    '@typescript-eslint/no-explicit-any': 2,
+    'no-undef': 'off',
+    'no-console': 'off',
+    'prettier/prettier': 'error',
+    'no-unused-vars': 'off',
+  },
 };
