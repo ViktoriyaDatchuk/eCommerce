@@ -3,7 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'airbnb', 'plugin:prettier/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'airbnb',
+    'plugin:prettier/recommended',
+    'plugin:react/jsx-runtime',
+  ],
   overrides: [
     {
       env: {
@@ -27,5 +33,9 @@ module.exports = {
     'no-console': 'off',
     'prettier/prettier': 'error',
     'no-unused-vars': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-uses-react': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
   },
 };
