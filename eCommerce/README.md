@@ -43,7 +43,7 @@ Users can browse through a range of products, view detailed descriptions, add th
 
 ## Scripts
 
-You can run any script using the command: npm run <script-name>.
+You can run any script using the command: npm run \<script-name\>.
 
 ```
   "dev": "vite","build": "tsc && vite build",
