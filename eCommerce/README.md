@@ -1,30 +1,66 @@
-# React + TypeScript + Vite
+# KinoGo-vno
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ecommerce web application for purchasing movie DVDs.
+Users can browse through a range of products, view detailed descriptions, add their favorite items to the basket, and proceed to checkout. It includes features such as user registration and login, product search, product categorization, and sorting to make the shopping experience more streamlined and convenient.
 
-Currently, two official plugins are available:
+## Objective
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- The goal is to build a Ecommerce web application where users can buy products online.
+- The project was developed using technologies such as React | Tailwind | Typescript | Redux Thunk (MEAN Stack)
 
-## Expanding the ESLint configuration
+## System Design
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Technology stack
 
-- Configure the top-level `parserOptions` property like this:
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>Technology</th>
+</tr>
+</thead>
+<tbody>
+	<tr>
+		<td>Front-End</td>
+		<td>React, Tailwind, HTML5, Typescript, Redux Thunk, Vite, Eslint, Prettier, Husky, Jest</td>
+	</tr>
+	<tr>
+		<td>Back-End</td>
+		<td>CommerceTools</td>
+	</tr>
+  <tr>
+		<td>Authentication</td>
+		<td>CommerceTools</td>
+	</tr>
+	<tr>
+		<td>API Testing</td>
+		<td>Postman</td>
+	</tr>
+</tbody>
+</table>
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-};
+## Screenshots
+
+## Scripts
+
+You can run any script using the command: npm run <script-name>.
+
+```
+  "dev": "vite","build": "tsc && vite build",
+  "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+  "preview": "vite preview",
+  "format": "prettier . --write",
+  "ci:format": "prettier . --check",
+  "prepare": "cd .. && husky eCommerce/.husky",
+  "test": "jest"
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Steps for Project Execution :
+
+##### Setting up and running the project locally
+
+```
+cd eCommerce
+npm install
+npm run dev
+```
