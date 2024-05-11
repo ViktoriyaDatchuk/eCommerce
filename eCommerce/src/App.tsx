@@ -1,7 +1,7 @@
 import './App.css';
 
 function App() {
-  return <h1>eCommerce Project</h1>;
+  return <h1 className="text-3xl font-bold underline text-slate-300">eCommerce Project</h1>;
 }
 
 export default App;
