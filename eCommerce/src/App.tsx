@@ -1,13 +1,32 @@
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import './App.css';
-import Header from './components/Header';
 import Main from './pages/main';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
+import Header from './components/Header/Header';
+import Collection from './pages/Collection';
 
-function App() {
+function LayoutWithHeader() {
   return (
     <>
       <Header />
-      <Main />;
+      <Outlet />
     </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route element={<LayoutWithHeader />}>
+          <Route path="/" element={<Main />} />
+          <Route path="/movie-collection" element={<Collection />} />
+        </Route>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/sign-up" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
 }
 
