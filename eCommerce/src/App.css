@@ -1,6 +1,14 @@
-/* #root {
+body {
+  background-color: #00091a;
+}
+
+#root {
   max-width: 1280px;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
   text-align: center;
-} */
+}
