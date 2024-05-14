@@ -24,8 +24,8 @@ export default function SignInForm() {
         <Button text="Sign In" isPrimary />
       </div>
       <p className="text-orange-400 mt-8">
-        If you don't have an account, you can{' '}
-        <a href="#" className="underline">
+        If you don&apos;t have an account, you can{' '}
+        <a href="https://www.google.com/" className="underline">
           sign up here
         </a>
       </p>
