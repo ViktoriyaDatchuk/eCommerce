@@ -55,5 +55,6 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'react/require-default-props': 'off',
   },
 };
