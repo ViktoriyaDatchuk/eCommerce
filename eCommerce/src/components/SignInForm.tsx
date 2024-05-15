@@ -1,43 +1,22 @@
-import { useEffect, useState } from 'react';
 import Button from './Button';
+import { useForm } from 'react-hook-form';
+
+interface SignInForm {
+  email: string;
+  password: string;
+}
 
 export default function SignInForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailDirty, setEmailDirty] = useState(false);
-  //   const [passwordDirty, setPasswordDirty] = useState(false);
-  const [emailError, setEmailError] = useState('Error! Empty value.');
-  //   const [passwordError, setPasswordError] = useState('Error! Empty value.');
+  const {
+    register,
+    // handleSubmit,
+    formState: { errors },
+  } = useForm<SignInForm>({ mode: 'all' });
 
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
   const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20';
   const inputStyle = 'h-30 rounded-md px-1.5';
-  const errorStyle = 'text-xs text-red-700 mt-1';
-
-  useEffect(() => {
-    const emailReg =
-      /^(\S([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
-    if (email.length === 0) {
-      setEmailError('Error! Empty value.');
-    } else if (!emailReg.test(email)) {
-      setEmailError('Error! Invalid email!');
-    } else {
-      setEmailError('');
-    }
-  }, [email]);
-
-  const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    switch (event.target.name) {
-      case 'email':
-        setEmailDirty(true);
-        break;
-      //   case 'password':
-      //     setPasswordDirty(true);
-      //     break;
-      default:
-        break;
-    }
-  };
+  const errorStyle = 'text-xs text-red-500 mt-1';
 
   return (
     <form className="flex flex-col w-full max-w-lg mx-auto">
@@ -45,31 +24,25 @@ export default function SignInForm() {
         Kino<span className="font-black text-orange-400">GO-VNO</span>
       </h1>
       <h2 className="text-5xl font-light text-teal-400 mb-14">SIGN IN</h2>
-      <label htmlFor="email" className={labelStyleGeneral}>
+      <label className={labelStyleGeneral}>
         Email
         <input
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value:
+                /^(\S([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
+              message: 'Invalid email',
+            },
+          })}
           type="email"
-          name="email"
-          id="email"
-          required
           className={inputStyle}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={(e) => blurHandler(e)}
         />
-        {emailDirty && emailError && <div className={errorStyle}>{emailError}</div>}
+        {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
       </label>
-      <label htmlFor="password" className={labelStyle}>
+      <label className={labelStyle}>
         Password
-        <input
-          type="password"
-          name="password"
-          id="password"
-          required
-          className={inputStyle}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <input {...(register('password'), { required: true })} type="password" className={inputStyle} />
       </label>
       <div className="flex gap-3.5 mt-16 mx-auto">
         <Button text="Back" isPrimary />
