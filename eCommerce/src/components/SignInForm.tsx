@@ -16,10 +16,10 @@ export default function SignInForm() {
 
   useEffect(() => {
     const emailReg =
-      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+      /^(\S([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
     if (email.length === 0) {
       setEmailError('Error! Empty value.');
-    } else if (!emailReg.test(email) || email[0] === ' ' || email[email.length - 1] === ' ') {
+    } else if (!emailReg.test(email)) {
       setEmailError('Error! Invalid email!');
     } else {
       setEmailError('');
