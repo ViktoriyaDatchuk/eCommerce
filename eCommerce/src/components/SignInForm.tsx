@@ -16,14 +16,14 @@ export default function SignInForm() {
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
   const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20';
   const inputStyle = 'h-30 rounded-md px-1.5';
-  const errorStyle = 'text-xs text-red-500 mt-1';
+  const errorStyle = 'text-left text-xs text-red-500 mt-1 mx-20';
 
   return (
     <form className="flex flex-col w-full max-w-lg mx-auto">
-      <h1 className="text-white text-4xl font-semibold mb-3">
+      <h1 className="text-white sm:text-4xl sm:mb-3 font-semibold text-3xl mb-0.5">
         Kino<span className="font-black text-orange-400">GO-VNO</span>
       </h1>
-      <h2 className="text-5xl font-light text-teal-400 mb-14">SIGN IN</h2>
+      <h2 className="sm:text-5xl font-light text-teal-400 mb-14 text-4xl">SIGN IN</h2>
       <label htmlFor="email" className={labelStyleGeneral}>
         Email
         <input
@@ -38,12 +38,36 @@ export default function SignInForm() {
           type="email"
           className={inputStyle}
         />
-        {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
       </label>
+      {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
       <label htmlFor="password" className={labelStyle}>
         Password
-        <input {...(register('password'), { required: true })} type="password" className={inputStyle} />
+        <input
+          {...register('password', {
+            required: 'Password is required',
+            validate: (value) => {
+              if (value.match(/\s/)) {
+                return 'Invalid password';
+              } else if (!value.match(/[A-Z]/)) {
+                return 'Password must include at least one uppercase letter';
+              } else if (!value.match(/[a-z]/)) {
+                return 'Password must include at least one lowercase letter';
+              } else if (!value.match(/\d/)) {
+                return 'Password must include at least one digit';
+              } else {
+                return true;
+              }
+            },
+            minLength: {
+              value: 8,
+              message: 'Password must have at least 8 characters',
+            },
+          })}
+          type="password"
+          className={inputStyle}
+        />
       </label>
+      {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">
         <Button text="Back" isPrimary />
         <Button text="Sign In" isPrimary />
