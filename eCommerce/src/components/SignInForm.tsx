@@ -1,7 +1,7 @@
-import Button from './Button';
 import { useForm } from 'react-hook-form';
+import Button from './Button';
 
-interface SignInForm {
+interface FormSignIn {
   email: string;
   password: string;
 }
@@ -11,7 +11,7 @@ export default function SignInForm() {
     register,
     // handleSubmit,
     formState: { errors },
-  } = useForm<SignInForm>({ mode: 'all' });
+  } = useForm<FormSignIn>({ mode: 'all' });
 
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
   const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20';
@@ -24,7 +24,7 @@ export default function SignInForm() {
         Kino<span className="font-black text-orange-400">GO-VNO</span>
       </h1>
       <h2 className="text-5xl font-light text-teal-400 mb-14">SIGN IN</h2>
-      <label className={labelStyleGeneral}>
+      <label htmlFor="email" className={labelStyleGeneral}>
         Email
         <input
           {...register('email', {
@@ -40,7 +40,7 @@ export default function SignInForm() {
         />
         {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
       </label>
-      <label className={labelStyle}>
+      <label htmlFor="password" className={labelStyle}>
         Password
         <input {...(register('password'), { required: true })} type="password" className={inputStyle} />
       </label>

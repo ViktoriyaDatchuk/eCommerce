@@ -55,5 +55,6 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'react/jsx-props-no-spreading': 'off',
   },
 };
