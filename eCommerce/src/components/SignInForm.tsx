@@ -1,5 +1,6 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 
 interface FormSignIn {
@@ -19,6 +20,8 @@ export default function SignInForm() {
   };
 
   const [visible, setVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
   const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20 relative';
@@ -89,9 +92,9 @@ export default function SignInForm() {
       </div>
       <p className="text-orange-400 mt-8">
         If you don&apos;t have an account, you can{' '}
-        <a href="https://www.google.com/" className="underline">
+        <button type="button" onClick={() => navigate('/sign-up')} className="underline">
           sign up here
-        </a>
+        </button>
       </p>
     </form>
   );
