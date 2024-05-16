@@ -71,7 +71,11 @@ export default function SignInForm() {
           type={visible ? 'text' : 'password'}
           className={inputStyle}
         />
-        <div className={visible ? closeEye : openEye} onClick={() => setVisible(!visible)}></div>
+        <div
+          className={visible ? closeEye : openEye}
+          onClick={() => setVisible(!visible)}
+          onKeyDown={() => setVisible(!visible)}
+        />
       </label>
       {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">
