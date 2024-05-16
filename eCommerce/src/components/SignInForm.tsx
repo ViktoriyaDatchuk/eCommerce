@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Button from './Button';
 
@@ -10,9 +10,14 @@ interface FormSignIn {
 export default function SignInForm() {
   const {
     register,
-    // handleSubmit,
+    handleSubmit,
     formState: { errors },
   } = useForm<FormSignIn>({ mode: 'all' });
+
+  const onSubmit: SubmitHandler<FormSignIn> = (data) => {
+    console.log(data);
+  };
+
   const [visible, setVisible] = useState(false);
 
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
@@ -24,7 +29,7 @@ export default function SignInForm() {
   const closeEye = `bg-[url('/bg/bg-close.svg')] ${eye}`;
 
   return (
-    <form className="flex flex-col w-full max-w-lg mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg mx-auto">
       <h1 className="text-white sm:text-4xl sm:mb-3 font-semibold text-3xl mb-0.5">
         Kino<span className="font-black text-orange-400">GO-VNO</span>
       </h1>
@@ -79,8 +84,8 @@ export default function SignInForm() {
       </label>
       {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">
-        <Button text="Back" isPrimary />
-        <Button text="Sign In" isPrimary />
+        <Button text="Back" isPrimary onClick={() => {}} />
+        <Button text="Sign In" isPrimary onClick={handleSubmit(onSubmit)} />
       </div>
       <p className="text-orange-400 mt-8">
         If you don&apos;t have an account, you can{' '}
