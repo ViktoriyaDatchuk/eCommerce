@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
 import Button from './Button';
 
 interface FormSignIn {
@@ -12,11 +13,15 @@ export default function SignInForm() {
     // handleSubmit,
     formState: { errors },
   } = useForm<FormSignIn>({ mode: 'all' });
+  const [visible, setVisible] = useState(false);
 
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
-  const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20';
-  const inputStyle = 'h-30 rounded-md px-1.5';
+  const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20 relative';
+  const inputStyle = 'h-30 rounded-md px-1.5 focus:outline-none';
   const errorStyle = 'text-left text-xs text-red-500 mt-1 mx-20';
+  const eye = 'bg-center bg-cover w-5 h-5 absolute right-1.5 top-8 cursor-pointer';
+  const openEye = `bg-[url('/bg/bg-eye.svg')] ${eye}`;
+  const closeEye = `bg-[url('/bg/bg-close.svg')] ${eye}`;
 
   return (
     <form className="flex flex-col w-full max-w-lg mx-auto">
@@ -63,9 +68,10 @@ export default function SignInForm() {
               message: 'Password must have at least 8 characters',
             },
           })}
-          type="password"
+          type={visible ? 'text' : 'password'}
           className={inputStyle}
         />
+        <div className={visible ? closeEye : openEye} onClick={() => setVisible(!visible)}></div>
       </label>
       {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">

@@ -56,5 +56,6 @@ module.exports = {
       },
     ],
     'react/jsx-props-no-spreading': 'off',
+    'no-else-return': 'off',
   },
 };
