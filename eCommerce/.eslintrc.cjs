@@ -56,5 +56,9 @@ module.exports = {
       },
     ],
     'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'no-else-return': 'off',
+    'jsx-a11y/control-has-associated-label': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
   },
 };
