@@ -15,6 +15,20 @@ interface IFormInput {
   postCode: string;
 }
 
+/* eslint-disable no-shadow */
+enum ErrorMessagesReg {
+  REQUIRED = 'This field is required',
+  WRONG_EMAIL_FORMAT = 'Wrong e-mail format',
+  PASSWORD_LENGTH = 'Too short password. Min length is 8 characters.',
+  PASSWORD_FORMAT = 'The password must contain minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+  NAME_FORMAT = 'Name must contain at least one character and no special characters or numbers',
+  LASTNAME_FORMAT = 'Last name must contain at least one character and no special characters or numbers',
+  COUNTRY_SELECT = 'Select country from list',
+  POSTCODE_FORMAT = 'Enter right code format for selected Country. Format:',
+  CITY_NAME = 'City name must contain at least one character and no special characters or numbers',
+  STREET_FORMAT = 'Street must contain at least one character',
+}
+
 export default function SignUp() {
   const inputStyle = 'h-9 rounded-md px-1.5 border-solid border-2 outline-0';
   const inputStyleShort = 'h-9 rounded-md w-36 px-1.5 border-solid border-2 outline-0';
@@ -52,14 +66,13 @@ export default function SignUp() {
           Email
           <input
             type="email"
-            /* eslint-disable react/jsx-props-no-spreading */
             {...register('email', {
-              required: 'This field is required',
+              required: ErrorMessagesReg.REQUIRED,
               pattern: {
                 value:
                   /* eslint-disable no-useless-escape */
                   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
-                message: 'Wrong e-mail format',
+                message: ErrorMessagesReg.WRONG_EMAIL_FORMAT,
               },
             })}
             placeholder="example@gmail.com"
@@ -72,12 +85,11 @@ export default function SignUp() {
           <input
             type="password"
             {...register('password', {
-              required: 'This field is required',
-              minLength: { value: 8, message: 'Too short password. Min length is 8 characters.' },
+              required: ErrorMessagesReg.REQUIRED,
+              minLength: { value: 8, message: ErrorMessagesReg.PASSWORD_LENGTH },
               pattern: {
                 value: /^(?=.*[0-9])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&\-*]{8,28}$/,
-                message:
-                  'The password must contain minimum 8 characters, at least 1 uppercase letter, 1 lowercase letter, and 1 number',
+                message: ErrorMessagesReg.PASSWORD_FORMAT,
               },
             })}
             name="password"
@@ -92,10 +104,10 @@ export default function SignUp() {
             <input
               type="text"
               {...register('firstName', {
-                required: 'This field is required',
+                required: ErrorMessagesReg.REQUIRED,
                 pattern: {
                   value: /^[A-Za-z]+$/,
-                  message: 'Name must contain at least one character and no special characters or numbers',
+                  message: ErrorMessagesReg.NAME_FORMAT,
                 },
               })}
               id="firstName"
@@ -109,10 +121,10 @@ export default function SignUp() {
             <input
               type="text"
               {...register('lastName', {
-                required: 'This field is required',
+                required: ErrorMessagesReg.REQUIRED,
                 pattern: {
                   value: /^[A-Za-z]+$/,
-                  message: 'Last name must contain at least one character and no special characters or numbers',
+                  message: ErrorMessagesReg.LASTNAME_FORMAT,
                 },
               })}
               id="lastName"
@@ -126,7 +138,7 @@ export default function SignUp() {
             <input
               type="date"
               {...register('birthDate', {
-                required: 'This field is required',
+                required: ErrorMessagesReg.REQUIRED,
               })}
               id="birthDate"
               className={`${inputStyleShort} ${validityStyle}`}
@@ -139,10 +151,10 @@ export default function SignUp() {
           Country/Region
           <select
             {...register('country', {
-              required: 'This field is required',
+              required: ErrorMessagesReg.REQUIRED,
               pattern: {
                 value: /^[A-Za-z]+$/,
-                message: 'Select country from list',
+                message: ErrorMessagesReg.COUNTRY_SELECT,
               },
             })}
             className={`${inputStyle} ${validityStyle}`}
@@ -165,10 +177,10 @@ export default function SignUp() {
             <input
               type="text"
               {...register('postCode', {
-                required: 'This field is required',
+                required: ErrorMessagesReg.REQUIRED,
                 validate: (value) => {
                   if (!new RegExp(postCodeRegExp).test(value)) {
-                    return `Enter right code format for selected Country. Format: ${postCodeFormat}`;
+                    return `${ErrorMessagesReg.POSTCODE_FORMAT} ${postCodeFormat}`;
                   }
                   return true;
                 },
@@ -184,10 +196,10 @@ export default function SignUp() {
             <input
               type="text"
               {...register('city', {
-                required: 'This field is required',
+                required: ErrorMessagesReg.REQUIRED,
                 pattern: {
                   value: /^[A-Za-z]+$/,
-                  message: 'City name must contain at least one character and no special characters or numbers',
+                  message: ErrorMessagesReg.CITY_NAME,
                 },
               })}
               id="city"
@@ -202,10 +214,10 @@ export default function SignUp() {
           <input
             type="text"
             {...register('street', {
-              required: 'This field is required',
+              required: ErrorMessagesReg.REQUIRED,
               pattern: {
                 value: /^(?=.*).+$/,
-                message: 'Street must contain at least one character',
+                message: ErrorMessagesReg.STREET_FORMAT,
               },
             })}
             id="street"
