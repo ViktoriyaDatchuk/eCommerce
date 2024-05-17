@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
+import Logo from './Header/Logo';
 
 interface FormSignIn {
   email: string;
@@ -32,11 +33,9 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg mx-auto">
-      <h1 className="text-white sm:text-4xl sm:mb-3 font-semibold text-3xl mb-0.5">
-        Kino<span className="font-black text-orange-400">GO-VNO</span>
-      </h1>
-      <h2 className="sm:text-5xl font-light text-teal-400 mb-14 text-4xl">SIGN IN</h2>
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center w-full max-w-lg mx-auto">
+      <Logo onClick={() => navigate('/')} />
+      <h2 className="mt-10 sm:text-5xl font-light text-teal-400 mb-14 text-4xl">SIGN IN</h2>
       <label htmlFor="email" className={labelStyleGeneral}>
         Email
         <input
@@ -91,7 +90,7 @@ export default function SignInForm() {
           text="Back"
           isPrimary
           onClick={() => {
-            navigate('/');
+            navigate(-1);
           }}
         />
         <Button text="Sign In" isPrimary onClick={handleSubmit(onSubmit)} />

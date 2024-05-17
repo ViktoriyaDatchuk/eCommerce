@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import countryList from '../store/Countries';
+import Logo from '../components/Header/Logo';
 
 interface IFormInput {
   email: string;
@@ -61,10 +62,8 @@ export default function SignUp() {
     <div className="flex flex-row h-full w-full">
       <div className="hidden lg:flex bg-[url('/bg/bg-signUn.jpg')] h-full bg-center bg-cover lg:max-w-800 w-full" />
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg md:px-24 mx-auto my-auto">
-        <h1 className="text-white text-4xl">
-          Kino<span className="font-bold text-orange-400">GO-VNO</span>
-        </h1>
-        <h2 className="text-5xl text-teal-400">SIGN UP</h2>
+        <Logo onClick={() => navigate('/')} />
+        <h2 className="mt-10 text-5xl text-teal-400">SIGN UP</h2>
         <label htmlFor="email" className={labelStyleRegular}>
           Email
           <input
@@ -234,11 +233,17 @@ export default function SignUp() {
             text="back"
             isPrimary
             onClick={() => {
-              navigate('/');
+              navigate(-1);
             }}
           />
           <Button text="Sign Up" isPrimary onClick={handleSubmit(onSubmit)} />
         </div>
+        <p className="text-orange-400 mt-8">
+          Already have an account?{' '}
+          <button type="button" onClick={() => navigate('/sign-in')} className="underline">
+            sign in here
+          </button>
+        </p>
       </form>
     </div>
   );
