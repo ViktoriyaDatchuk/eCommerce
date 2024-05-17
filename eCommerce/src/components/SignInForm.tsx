@@ -98,7 +98,7 @@ export default function SignInForm() {
       <p className="text-orange-400 mt-8">
         If you don&apos;t have an account, you can{' '}
         <button type="button" onClick={() => navigate('/sign-up')} className="underline">
-          sign up here
+          sign-up here
         </button>
       </p>
     </form>
