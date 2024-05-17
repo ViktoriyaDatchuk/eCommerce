@@ -55,6 +55,7 @@ module.exports = {
         tsx: 'never',
       },
     ],
+    'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-else-return': 'off',
     'jsx-a11y/control-has-associated-label': 'off',

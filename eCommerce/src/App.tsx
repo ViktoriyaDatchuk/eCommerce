@@ -1,32 +1,22 @@
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
-import './App.css';
-import Main from './pages/main';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Main from './pages/Main';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
-import Header from './components/Header/Header';
-import Collection from './pages/Collection';
+import Collection from './pages/Collection/Collection';
 import Page404 from './pages/Page404';
 
-function LayoutWithHeader() {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  );
-}
+import './App.css';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<LayoutWithHeader />}>
-          <Route path="/" element={<Main />} />
-          <Route path="/movie-collection" element={<Collection />} />
-          <Route path="*" element={<Page404 />} />
-        </Route>
+        <Route path="/" element={<Main />} />
+        <Route path="/movie-collection" element={<Collection />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </Router>
   );
