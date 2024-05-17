@@ -1,5 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import countryList from '../store/Countries';
 
@@ -53,6 +54,8 @@ export default function SignUp() {
   const [postCodeFormat, setPostCodeFormat] = useState('NNNN');
 
   const THIRTEEN_YEARS = 31536000000 * 13;
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-row h-full w-full">
@@ -227,7 +230,13 @@ export default function SignUp() {
           {errors.street?.message && <p className={errorStyle}>{errors.street?.message}</p>}
         </label>
         <div className="flex gap-x-8 mt-12 mx-auto">
-          <Button text="back" isPrimary onClick={() => {}} />
+          <Button
+            text="back"
+            isPrimary
+            onClick={() => {
+              navigate('/');
+            }}
+          />
           <Button text="Sign Up" isPrimary onClick={handleSubmit(onSubmit)} />
         </div>
       </form>

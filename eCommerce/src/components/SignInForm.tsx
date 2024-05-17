@@ -21,8 +21,6 @@ export default function SignInForm() {
 
   const [visible, setVisible] = useState(false);
 
-  const navigate = useNavigate();
-
   const labelStyleGeneral = 'text-teal-400 text-xl text-left flex flex-col mt-3.5 mx-20';
   const labelStyle = 'text-teal-400 text-xl text-left flex flex-col mt-7 mx-20 relative';
   const inputStyle = 'h-30 rounded-md px-1.5 focus:outline-none';
@@ -30,6 +28,8 @@ export default function SignInForm() {
   const eye = 'bg-center bg-cover w-5 h-5 absolute right-1.5 top-8 cursor-pointer';
   const openEye = `bg-[url('/bg/bg-eye.svg')] ${eye}`;
   const closeEye = `bg-[url('/bg/bg-close.svg')] ${eye}`;
+
+  const navigate = useNavigate();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-full max-w-lg mx-auto">
@@ -87,7 +87,13 @@ export default function SignInForm() {
       </label>
       {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">
-        <Button text="Back" isPrimary onClick={() => {}} />
+        <Button
+          text="Back"
+          isPrimary
+          onClick={() => {
+            navigate('/');
+          }}
+        />
         <Button text="Sign In" isPrimary onClick={handleSubmit(onSubmit)} />
       </div>
       <p className="text-orange-400 mt-8">
