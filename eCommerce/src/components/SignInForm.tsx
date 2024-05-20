@@ -45,7 +45,8 @@ export default function SignInForm() {
         },
       })
       .execute()
-      .then(() => {
+      .then((responce) => {
+        localStorage.setItem('user', responce.body.customer.id);
         navigate('/');
       })
       .catch(() => {
