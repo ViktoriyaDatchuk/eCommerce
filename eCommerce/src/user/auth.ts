@@ -52,22 +52,22 @@ export function sighUpUser(userData: IFormInput, navigate: (path: string) => voi
         firstName: userData.firstName,
         lastName: userData.lastName,
         dateOfBirth: userData.birthDate,
-        // addresses: [
-        //   {
-        //     key: 'address1',
-        //     title: '',
-        //     firstName: userData.firstName,
-        //     lastName: userData.lastName,
-        //     streetName: userData.street,
-        //     streetNumber: '12',
-        //     postalCode: '12345',
-        //     city: 'Example City',
-        //     country: userData.country,
-        //     phone: '+312345678',
-        //     mobile: '+312345679',
-        //     email: 'jane.doe@example.com',
-        //   },
-        // ],
+        addresses: [
+          {
+            key: 'address1',
+            title: '',
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            streetName: userData.street,
+            streetNumber: '12',
+            postalCode: '12345',
+            city: 'Example City',
+            country: userData.country,
+            phone: '+312345678',
+            mobile: '+312345679',
+            email: 'jane.doe@example.com',
+          },
+        ],
       },
     })
     .execute()
