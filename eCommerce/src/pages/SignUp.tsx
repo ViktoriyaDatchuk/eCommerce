@@ -162,13 +162,15 @@ export default function SignUp() {
             className={`${inputStyle} ${validityStyle}`}
             defaultValue=" "
             onChange={(e) => {
-              const selectedCountry = countryList.find((cntr) => cntr.country === e.target.value)!;
+              const selectedCountry = countryList.find((cntr) => cntr.iso === e.target.value)!;
               setPostCodeRegExp(selectedCountry.regex);
               setPostCodeFormat(selectedCountry.format);
             }}
           >
             {countryList.map((el) => (
-              <option key={el.country}>{el.country}</option>
+              <option key={el.country} value={el.iso}>
+                {el.country}
+              </option>
             ))}
           </select>
           {errors.country?.message && <p className={errorStyle}>{errors.country?.message}</p>}
