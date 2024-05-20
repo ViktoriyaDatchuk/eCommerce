@@ -12,6 +12,7 @@ const scopes = [
   'manage_customer_groups:rs_school-ecommerce_app',
   'manage_types:rs_school-ecommerce_app',
   'manage_order_edits:rs_school-ecommerce_app',
+  'manage_my_orders:rs_school-ecommerce_app',
   'manage_payments:rs_school-ecommerce_app',
   'manage_products:rs_school-ecommerce_app',
   'manage_project_settings:rs_school-ecommerce_app',
@@ -24,16 +25,14 @@ const scopes = [
   'manage_orders:rs_school-ecommerce_app',
   'manage_api_clients:rs_school-ecommerce_app',
   'manage_my_profile:rs_school-ecommerce_app',
-  'view_api_clients:rs_school-ecommerce_app',
-  'manage_my_orders:rs_school-ecommerce_app',
 ];
 
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',
   projectKey,
   credentials: {
-    clientId: 'dMmnwy4wXA3Y9TNEmgIXjn5y',
-    clientSecret: 'Ahpsf66aTX9Q_VAUnXqpsoJdOUGbGLEX',
+    clientId: '0UgsBYepjNL8i7aHecX-QIBy',
+    clientSecret: 'HqCX_AsxBC1YWdqlQDALkOO1P62oDInn',
   },
   scopes,
   fetch,
