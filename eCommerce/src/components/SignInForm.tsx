@@ -26,7 +26,7 @@ export default function SignInForm() {
   const inputStyle = 'h-30 rounded-md px-1.5 focus:outline-none border-solid border-2';
   const inputValidStyle = `${inputStyle} border-green-500 text-slate-950`;
   const inputErrorStyle = `${inputStyle} text-red-400 border-red-500`;
-  const errorStyle = 'self-start text-xs text-red-500 mt-1 mx-20';
+  const errorStyle = 'self-start text-xs text-red-500 mt-1 ml-1';
   const eye = 'bg-center bg-cover w-4 h-4 absolute right-2 top-9 cursor-pointer';
   const openEye = `bg-[url('/bg/bg-eye.svg')] ${eye}`;
   const closeEye = `bg-[url('/bg/bg-close.svg')] ${eye}`;
@@ -88,9 +88,10 @@ export default function SignInForm() {
           type="email"
           className={errors.email || emailError ? inputErrorStyle : inputValidStyle}
         />
+        {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
+        {emailError && <div className={errorStyle}>User with this email is not registered</div>}
       </label>
-      {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
-      {emailError && <div className={errorStyle}>User with this email is not registered</div>}
+
       <label htmlFor="password" className={labelStyle}>
         Password
         <input
@@ -125,9 +126,9 @@ export default function SignInForm() {
           onClick={() => setVisible(!visible)}
           onKeyDown={() => setVisible(!visible)}
         />
+        {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
+        {passwordError && <div className={errorStyle}>Incorrect password</div>}
       </label>
-      {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
-      {passwordError && <div className={errorStyle}>Incorrect password</div>}
       <div className="flex gap-3.5 mt-16 mx-auto">
         <Button
           text="Back"
