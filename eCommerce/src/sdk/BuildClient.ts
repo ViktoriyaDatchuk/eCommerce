@@ -1,5 +1,11 @@
 import fetch from 'node-fetch';
-import { AuthMiddlewareOptions, ClientBuilder, HttpMiddlewareOptions } from '@commercetools/sdk-client-v2';
+import {
+  AuthMiddlewareOptions,
+  ClientBuilder,
+  HttpMiddlewareOptions,
+  TokenCache,
+  TokenStore,
+} from '@commercetools/sdk-client-v2';
 
 const projectKey = 'rs_school-ecommerce_app';
 const scopes = [
@@ -27,6 +33,15 @@ const scopes = [
   'manage_my_profile:rs_school-ecommerce_app',
 ];
 
+const TockenCashe: TokenCache = {
+  get() {
+    return JSON.parse(localStorage.getItem('tocken')!);
+  },
+  set(newToken: TokenStore) {
+    localStorage.setItem('token', JSON.stringify(newToken));
+  },
+};
+
 const authMiddlewareOptions: AuthMiddlewareOptions = {
   host: 'https://auth.europe-west1.gcp.commercetools.com',
   projectKey,
@@ -36,6 +51,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
   },
   scopes,
   fetch,
+  tokenCache: TockenCashe,
 };
 
 // const authMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
