@@ -5,7 +5,7 @@ import Button from './Button';
 import Logo from './Header/Logo';
 import apiRoot from '../sdk/apiRoot';
 
-interface FormSignIn {
+export interface FormSignIn {
   email: string;
   password: string;
 }
