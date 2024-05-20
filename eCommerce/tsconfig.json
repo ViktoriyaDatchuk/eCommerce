@@ -21,6 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true
   },
-  "include": ["src"],
+  "include": ["src", "src/sdk/BuildClient.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
