@@ -5,7 +5,7 @@ import Button from './Button';
 import Logo from './Header/Logo';
 import apiRoot from '../sdk/apiRoot';
 
-interface FormSignIn {
+export interface FormSignIn {
   email: string;
   password: string;
 }
@@ -47,6 +47,11 @@ export default function SignInForm() {
       .execute()
       .then((responce) => {
         localStorage.setItem('user', responce.body.customer.id);
+        const user = {
+          firstName: responce.body.customer.firstName,
+          lastName: responce.body.customer.lastName,
+        };
+        localStorage.setItem('commercetools_user', JSON.stringify(user));
         navigate('/');
       })
       .catch(() => {

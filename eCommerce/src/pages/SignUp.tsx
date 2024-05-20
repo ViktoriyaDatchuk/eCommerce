@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import countryList from '../store/Countries';
 import Logo from '../components/Header/Logo';
+import { sighUpUser } from '../user/auth';
 
-interface IFormInput {
+export interface IFormInput {
   email: string;
   password: string;
   firstName: string;
@@ -47,16 +48,16 @@ export default function SignUp() {
     formState: { errors },
   } = useForm<IFormInput>({ shouldUseNativeValidation: true });
 
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    sighUpUser(data, navigate);
   };
 
   const [postCodeRegExp, setPostCodeRegExp] = useState('^\\d{4}$');
   const [postCodeFormat, setPostCodeFormat] = useState('NNNN');
 
   const THIRTEEN_YEARS = 31536000000 * 13;
-
-  const navigate = useNavigate();
 
   return (
     <div className="flex flex-row h-full w-full">
