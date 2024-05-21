@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import Logo from './Header/Logo';
-import apiRoot from '../sdk/apiRoot';
+import { signInUser } from '../user/userAuth';
 
 export interface FormSignIn {
   email: string;
@@ -34,43 +34,7 @@ export default function SignInForm() {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormSignIn> = (data) => {
-    console.log(data);
-    apiRoot
-      .me()
-      .login()
-      .post({
-        body: {
-          email: data.email,
-          password: data.password,
-        },
-      })
-      .execute()
-      .then((responce) => {
-        localStorage.setItem('user', responce.body.customer.id);
-        const user = {
-          firstName: responce.body.customer.firstName,
-          lastName: responce.body.customer.lastName,
-        };
-        localStorage.setItem('commercetools_user', JSON.stringify(user));
-        navigate('/');
-      })
-      .catch(() => {
-        apiRoot
-          .customers()
-          .get({
-            queryArgs: {
-              where: [`email="${data.email}"`],
-            },
-          })
-          .execute()
-          .then((responce) => {
-            if (responce.body.count === 0) {
-              setEmailError(true);
-            } else {
-              setPasswordError(true);
-            }
-          });
-      });
+    signInUser(data, setEmailError, setPasswordError, navigate);
   };
 
   return (
