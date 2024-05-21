@@ -11,13 +11,12 @@ export default function LogIn() {
 
   const userString = localStorage.getItem('commercetools_user');
   const user = userString ? JSON.parse(userString) : null;
-  console.log(user);
 
   return (
     <>
-      <div className="flex items-center gap-1 text-white">
-        <p> {user.firstName} </p>
-        <p>${user.lastName}</p>
+      <div className="flex items-center gap-1 text-white hover:cursor-pointer">
+        <p>{user.firstName}</p>
+        <p>{user.lastName}</p>
       </div>
       <Button text="sign out" isPrimary onClick={logout} />
     </>
