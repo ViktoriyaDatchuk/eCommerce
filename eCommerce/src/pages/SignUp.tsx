@@ -33,11 +33,15 @@ enum ErrorMessagesReg {
 }
 
 export default function SignUp() {
-  const inputStyle = 'h-9 rounded-md px-1.5 border-solid border-2 outline-0';
-  const inputStyleShort = 'h-9 rounded-md w-36 px-1.5 border-solid border-2 outline-0';
-  const validityStyle = 'valid:border-green-500 valid:text-slate-950 invalid:text-red-400 invalid:border-red-500';
+  const inputStyle = 'h-9 rounded-md px-1.5 outline-0 border-solid border-2';
+  const inputStyleShort = `${inputStyle} w-36`;
+  const validStyle = `${inputStyle} border-green-500`;
+  const validStyleShort = `${inputStyleShort} border-green-500`;
+  const invalidStyle = `${inputStyle} text-slate-950 text-red-400 border-red-500`;
+  const invalidStyleShort = `${inputStyleShort} text-slate-950 text-red-400 border-red-500`;
   const labelStyleRegular = 'text-orange-400 text-lg text-left flex flex-col mt-4';
   const labelStyleShort = 'text-orange-400 text-lg text-left flex flex-col';
+  const labelStyleCheckbox = 'text-teal-400 flex flex-row mt-4';
   const wrapperStyle = 'flex flex-row flex-wrap gap-x-8 mt-4 gap-y-4';
   const labelStyleGreen = 'text-teal-400 text-lg text-left flex flex-col';
   const errorStyle = 'text-red-400 text-sm';
@@ -46,16 +50,19 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>({ shouldUseNativeValidation: true });
+  } = useForm<IFormInput>({ mode: 'all' });
 
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(isDefaultAddress, isSameAddress);
     sighUpUser(data, navigate);
   };
 
   const [postCodeRegExp, setPostCodeRegExp] = useState('^\\d{4}$');
   const [postCodeFormat, setPostCodeFormat] = useState('NNNN');
+  const [isDefaultAddress, setIsDefaultAddress] = useState(false);
+  const [isSameAddress, setIsSameAddress] = useState(false);
 
   const THIRTEEN_YEARS = 31536000000 * 13;
 
@@ -79,7 +86,7 @@ export default function SignUp() {
               },
             })}
             placeholder="example@gmail.com"
-            className={`${inputStyle} ${validityStyle}`}
+            className={errors.email ? invalidStyle : validStyle}
           />
           {errors.email?.message && <p className={errorStyle}>{errors.email?.message}</p>}
         </label>
@@ -97,7 +104,7 @@ export default function SignUp() {
             })}
             name="password"
             placeholder="Type your password"
-            className={`${inputStyle} ${validityStyle}`}
+            className={errors.password ? invalidStyle : validStyle}
           />
           {errors.password?.message && <p className={errorStyle}>{errors.password?.message}</p>}
         </label>
@@ -115,7 +122,7 @@ export default function SignUp() {
               })}
               id="firstName"
               placeholder="John"
-              className={`${inputStyleShort} ${validityStyle}`}
+              className={errors.firstName ? invalidStyleShort : validStyleShort}
             />
             {errors.firstName?.message && <p className={errorStyle}>{errors.firstName?.message}</p>}
           </label>
@@ -132,7 +139,7 @@ export default function SignUp() {
               })}
               id="lastName"
               placeholder="Doe"
-              className={`${inputStyleShort} ${validityStyle}`}
+              className={errors.lastName ? invalidStyleShort : validStyleShort}
             />
             {errors.lastName?.message && <p className={errorStyle}>{errors.lastName?.message}</p>}
           </label>
@@ -144,13 +151,13 @@ export default function SignUp() {
                 required: ErrorMessagesReg.REQUIRED,
               })}
               id="birthDate"
-              className={`${inputStyleShort} ${validityStyle}`}
+              className={errors.birthDate ? invalidStyleShort : validStyleShort}
               max={new Date(Date.now() - THIRTEEN_YEARS).toISOString().split('T')[0]}
             />
             {errors.birthDate?.message && <p className={errorStyle}>{errors.birthDate?.message}</p>}
           </label>
         </div>
-        <label htmlFor="country" className={`${labelStyleGreen} mt-8 ${validityStyle}`}>
+        <label htmlFor="country" className={`${labelStyleGreen} mt-8`}>
           Country/Region
           <select
             {...register('country', {
@@ -160,7 +167,7 @@ export default function SignUp() {
                 message: ErrorMessagesReg.COUNTRY_SELECT,
               },
             })}
-            className={`${inputStyle} ${validityStyle}`}
+            className={errors.country ? invalidStyle : validStyle}
             defaultValue=" "
             onChange={(e) => {
               const selectedCountry = countryList.find((cntr) => cntr.iso === e.target.value)!;
@@ -192,7 +199,7 @@ export default function SignUp() {
               })}
               id="postCode"
               placeholder="247711"
-              className={`${inputStyleShort} ${validityStyle}`}
+              className={errors.postCode ? invalidStyleShort : validStyleShort}
             />
             {errors.postCode?.message && <p className={errorStyle}>{errors.postCode?.message}</p>}
           </label>
@@ -209,12 +216,12 @@ export default function SignUp() {
               })}
               id="city"
               placeholder="Washington"
-              className={`${inputStyleShort} ${validityStyle}`}
+              className={errors.city ? invalidStyleShort : validStyleShort}
             />
             {errors.city?.message && <p className={errorStyle}>{errors.city?.message}</p>}
           </label>
         </div>
-        <label htmlFor="street" className={`${labelStyleGreen} ${validityStyle} mt-4`}>
+        <label htmlFor="street" className={`${labelStyleGreen} mt-4`}>
           Street
           <input
             type="text"
@@ -226,10 +233,32 @@ export default function SignUp() {
               },
             })}
             id="street"
-            placeholder="Type your street"
-            className={`${inputStyle} ${validityStyle}`}
+            placeholder="Street"
+            className={errors.street ? invalidStyleShort : validStyleShort}
           />
           {errors.street?.message && <p className={errorStyle}>{errors.street?.message}</p>}
+        </label>
+        <label htmlFor="defaultAddress" className={labelStyleCheckbox}>
+          <input
+            type="checkbox"
+            id="defaultAddress"
+            className="mr-2"
+            onChange={(e) => {
+              setIsDefaultAddress(e.target.checked);
+            }}
+          />{' '}
+          Set Address as default
+        </label>
+        <label htmlFor="sameAddress" className={labelStyleCheckbox}>
+          <input
+            type="checkbox"
+            id="sameAddress"
+            className="mr-2"
+            onChange={(e) => {
+              setIsSameAddress(e.target.checked);
+            }}
+          />{' '}
+          Use same Address for shipping
         </label>
         <div className="flex gap-x-8 mt-12 mx-auto">
           <Button
