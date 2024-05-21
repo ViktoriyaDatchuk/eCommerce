@@ -54,15 +54,15 @@ export default function SignUp() {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(isDefaultAddress, isSameAddress);
-    sighUpUser(data, navigate);
-  };
-
   const [postCodeRegExp, setPostCodeRegExp] = useState('^\\d{4}$');
   const [postCodeFormat, setPostCodeFormat] = useState('NNNN');
   const [isDefaultAddress, setIsDefaultAddress] = useState(false);
   const [isSameAddress, setIsSameAddress] = useState(false);
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log(isDefaultAddress, isSameAddress);
+    sighUpUser(data, navigate);
+  };
 
   const THIRTEEN_YEARS = 31536000000 * 13;
 
