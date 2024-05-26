@@ -14,9 +14,16 @@ export default function LogIn() {
 
   return (
     <>
-      <div className="flex items-center gap-1 text-white hover:cursor-pointer">
-        <p>{user.firstName}</p>
-        <p>{user.lastName}</p>
+      <div>
+        <img src="disc.png" alt="disc" />
+      </div>
+      <div>
+        <Button
+          text={`${user.firstName} ${user.lastName}`}
+          isPrimary={false}
+          onClick={() => navigate('/profil-info')}
+          addClass="bg-transparent text-orange-400 font-normal hover:bg-transparent hover:underline"
+        />
       </div>
       <Button text="sign out" isPrimary onClick={logout} />
     </>
