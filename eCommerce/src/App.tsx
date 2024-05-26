@@ -7,8 +7,8 @@ import Collection from './pages/Collection/Collection';
 import Page404 from './pages/Page404';
 
 import './App.css';
-import ProfilInfo from './pages/Profil-info';
-import ProfilEdit from './pages/Profil-edit';
+import ProfilInfo from './pages/Profil/Profil-info';
+import ProfilEdit from './pages/Profil/Profil-edit';
 
 function App() {
   return (
