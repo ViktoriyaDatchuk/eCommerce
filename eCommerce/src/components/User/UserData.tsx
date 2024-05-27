@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button';
 
-interface UserData {
-  first: string;
-  last: string;
-  data: string;
-  email: string;
+interface UserProfileInfo {
+  first: string | undefined;
+  last: string | undefined;
+  data: string | undefined;
+  email: string | undefined;
 }
 
-export default function UserDataInfo({ first, last, data, email }: UserData) {
+export default function UserDataInfo({ first, last, data, email }: UserProfileInfo) {
   const navigate = useNavigate();
   return (
     <div className="flex px-6 sm:px-14 flex-col justify-center gap-5">

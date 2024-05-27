@@ -1,12 +1,12 @@
-interface Address {
-  country: string;
-  zipCode: string;
-  city: string;
-  street: string;
+interface AddressInfo {
+  country: string | undefined;
+  zipCode: string | undefined;
+  city: string | undefined;
+  street: string | undefined;
   isShipping?: boolean;
 }
 
-export default function UserAdress({ country, zipCode, city, street, isShipping }: Address) {
+export default function UserAdress({ country, zipCode, city, street, isShipping }: AddressInfo) {
   const style = 'mb-2 text-xl font-bold text-teal-400';
   return (
     <div className="flex flex-col text-left">
