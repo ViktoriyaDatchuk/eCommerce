@@ -8,3 +8,9 @@ export interface Address {
   country: string;
   email: string;
 }
+
+export interface UserDataLocalStorage {
+  firstName: string;
+  lastName: string;
+  id: string;
+}

@@ -6,6 +6,7 @@ import { IFormInput } from '../pages/SignUp';
 
 const saveUserToLocalStorage = (response: ClientResponse, navigate: (path: string) => void) => {
   const user = {
+    id: response.body.customer.id,
     firstName: response.body.customer.firstName,
     lastName: response.body.customer.lastName,
   };

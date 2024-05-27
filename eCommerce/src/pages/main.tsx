@@ -1,9 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
 import Page from '../components/Page';
 
 export default function Main() {
-  const navigate = useNavigate();
   return (
     <Page className="flex flex-col justify-center items-center flex-1 bg-[url('/bg/bg-home.png')] bg-center bg-cover">
       <div className="max-w-3xl w-full py-10 mt-40 flex flex-col gap-5 font-sans text-white  bg-gray-900 rounded-md">
@@ -13,9 +10,6 @@ export default function Main() {
         <div className="text-2xl font-bold text-teal-400">
           <p>Blast from the Past:</p>
           <p>Blu-ray Movies - The Ancient Relic of Cinematic Enjoyment</p>
-        </div>
-        <div>
-          <Button text="sign in" isPrimary onClick={() => navigate('/sign-in')} />
         </div>
       </div>
     </Page>

@@ -7,7 +7,7 @@ import {
   TokenStore,
 } from '@commercetools/sdk-client-v2';
 
-const projectKey = 'rs_school-ecommerce_app';
+export const projectKey = 'rs_school-ecommerce_app';
 const scopes = [
   'manage_shopping_lists:rs_school-ecommerce_app',
   'manage_my_payments:rs_school-ecommerce_app',
@@ -66,7 +66,7 @@ const authMiddlewareOptions: AuthMiddlewareOptions = {
 //   fetch,
 // };
 
-const httpMiddlewareOptions: HttpMiddlewareOptions = {
+export const httpMiddlewareOptions: HttpMiddlewareOptions = {
   host: 'https://api.europe-west1.gcp.commercetools.com',
   fetch,
 };

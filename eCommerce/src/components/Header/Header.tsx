@@ -7,7 +7,7 @@ export default function Header() {
   const navigate = useNavigate();
 
   return (
-    <header className="flex justify-between">
+    <header className="flex flex-wrap justify-center gap-4 sm:justify-between">
       <div className="flex gap-5">
         <Logo onClick={() => navigate('/')} />
         <Button text="find a movie" isPrimary={false} onClick={() => navigate('/movie-collection')} />
