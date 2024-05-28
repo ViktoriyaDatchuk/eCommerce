@@ -9,6 +9,7 @@ import Page404 from './pages/Page404';
 import './App.css';
 import ProfilInfo from './pages/Profil/Profil-info';
 import ProfilEdit from './pages/Profil/Profil-edit';
+import Movie from './pages/Movie';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/movie-collection" element={<Collection />} />
+        <Route path="/movie-collection/:name" element={<Movie />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
         <Route path="/profil-info" element={<ProfilInfo />} />
