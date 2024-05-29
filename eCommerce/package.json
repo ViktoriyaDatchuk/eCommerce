@@ -19,6 +19,10 @@
     "@commercetools/platform-sdk": "^7.8.0",
     "@commercetools/sdk-client-v2": "^2.5.0",
     "@commercetools/sdk-middleware-http": "^7.0.4",
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@tanstack/react-query": "^5.40.0",
     "isomorphic-fetch": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
     "node-fetch": "^3.3.2",
@@ -26,6 +30,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {

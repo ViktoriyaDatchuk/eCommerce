@@ -1,6 +1,6 @@
 import apiRoot from '../sdk/apiRoot';
 
-export default function getCurrentUser() {
+export default async function getCurrentUser() {
   const user = localStorage.getItem('commercetools_user');
 
   if (user) {
