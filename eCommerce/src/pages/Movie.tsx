@@ -1,5 +1,5 @@
 import Page from '../components/Page';
-import { movie } from '../data/movies';
+import movie from '../data/movies';
 
 export default function Movie() {
   return (
@@ -8,11 +8,11 @@ export default function Movie() {
         <div>
           <img
             src={movie.masterData.current.masterVariant.images[0].url}
-            alt="movie image"
+            alt="movie"
             className="max-w-[300px] drop-shadow-[0_4px_30px_rgba(24,201,176,1)]"
           />
         </div>
-        <div></div>
+        <div />
       </div>
     </Page>
   );

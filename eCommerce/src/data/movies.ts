@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 interface Movie {
   id: string;
   version: number;
@@ -65,7 +66,7 @@ interface MovieData {
     };
   };
   variants: [];
-  searchKeywords: {};
+  searchKeywords: object;
 }
 
 interface PriceObject {
@@ -100,7 +101,7 @@ interface AttributeMovie {
   value: string;
 }
 
-export const movie: Movie = {
+const movie: Movie = {
   id: '9bbd415f-8e50-437d-91b8-9f7fc2ca7098',
   version: 17,
   versionModifiedAt: '2024-05-29T14:19:30.595Z',
@@ -309,3 +310,5 @@ export const movie: Movie = {
   priceMode: 'Embedded',
   lastVariantId: 1,
 };
+
+export default movie;
