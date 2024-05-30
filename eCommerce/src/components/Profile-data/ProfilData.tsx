@@ -24,7 +24,7 @@ export default function ProfileDataInfo({ first, last, data, email }: ProfileInf
       </div>
       <div className="flex flex-col gap-2 text-left text-orange-400">
         <p>{first}</p>
-        <p> {last}</p>
+        <p>{last}</p>
         <p>{data}</p>
         <p>{email}</p>
       </div>

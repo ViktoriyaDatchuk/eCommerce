@@ -19,7 +19,7 @@ export default function UserAdress({ country, zipCode, city, street, isShipping 
   };
 
   return (
-    <div className="flex flex-col text-left">
+    <div className="w-full flex flex-col text-left">
       {!isShipping && (
         <div className={style}>
           <p>Billing</p>
@@ -34,7 +34,7 @@ export default function UserAdress({ country, zipCode, city, street, isShipping 
           <EditButton icon={faTrash} onClick={deleteAddress} />
         </div>
       )}
-      <div className="w-full flex justify-between flex-wrap gap-12 text-lg text-white sm:gap-20">
+      <div className="flex justify-between flex-wrap gap-12 text-lg text-white sm:gap-20">
         <div className="flex flex-wrap gap-5">
           <p>Country: {country}</p>
           <p>Zip-code: {zipCode}</p>
