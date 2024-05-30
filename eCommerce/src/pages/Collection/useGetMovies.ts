@@ -3,6 +3,7 @@
 // const LIMIT = 5;
 // const apiUrl = `https://json-placeholder.mock.beeceptor.com/photos?_start=1&_limit=${LIMIT}`;
 // const getApiUrl = (cursor) => `https://jsonplaceholder.typicode.com/comments?_start=${cursor}&_limit=${LIMIT}`;
+
 // const fetchMovies = async ({ pageParam }) => {
 //   const res = await fetch(getApiUrl(pageParam));
 //   return res.json();
