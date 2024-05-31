@@ -1,6 +1,6 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-
 import { useState } from 'react';
+import { Address } from '@commercetools/platform-sdk';
 
 import Page from '../../components/Page';
 import UserAdress from '../../components/Profile-data/ProfilAddressInfo';
@@ -8,7 +8,7 @@ import ProfilDataInfo from '../../components/Profile-data/ProfilData';
 
 import EditButton from '../../components/EditButton';
 import useCurrentUser from '../../user/getCurrentUser';
-import LoadingModal from './LoadingModal';
+import LoadingModal from '../../components/LoadingModal';
 
 export default function ProfilInfo() {
   const userData = useCurrentUser();
@@ -39,8 +39,15 @@ export default function ProfilInfo() {
             <EditButton icon={faPlus} onClick={addAddress} size="lg" />
           </div>
           <div className="max-h-max overflow-auto">
-            <div className="py-8 grow flex flex-col justify-center items-center gap-8">
-              {userData?.addresses.map((address) => {
+            <div className="py-8 grow flex flex-col justify-center items-center gap-4">
+              {userData?.addresses.map((address: Address) => {
+                if (!address.id) {
+                  return null;
+                }
+                const isBillingAddress = userData.billingAddressIds?.includes(address.id);
+                const isShippingAddress = userData.shippingAddressIds?.includes(address.id);
+                const isBillingDefault = userData.defaultBillingAddressId === address?.id;
+                const isShippingDefault = userData.defaultShippingAddressId === address?.id;
                 return (
                   <UserAdress
                     key={address.id}
@@ -48,6 +55,10 @@ export default function ProfilInfo() {
                     zipCode={address.postalCode}
                     city={address.city}
                     street={address.streetName}
+                    billingAddress={isBillingAddress}
+                    shippingAddress={isShippingAddress}
+                    defaultBilling={isBillingDefault}
+                    defaultShipping={isShippingDefault}
                   />
                 );
               })}

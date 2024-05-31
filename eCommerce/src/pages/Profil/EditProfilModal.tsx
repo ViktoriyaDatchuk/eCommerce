@@ -3,7 +3,7 @@ import Modal from 'react-modal';
 import Button from '../../components/Button';
 import InputModal from '../../components/InputModal';
 import useCurrentUser from '../../user/getCurrentUser';
-import LoadingModal from './LoadingModal';
+import LoadingModal from '../../components/LoadingModal';
 
 interface EditProfilModalProps {
   modalName: string;
