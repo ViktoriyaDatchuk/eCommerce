@@ -29,7 +29,7 @@ export default function EditProfilModal({ modalName, isOpenModal, setIsOpenModal
 
   return (
     <Modal
-      className="max-w-lg p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
+      className="max-w-80 w-full p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
       overlayClassName="p-8 fixed flex justify-center items-center inset-0 bg-black bg-opacity-80 z-50"
       isOpen={isOpenModal}
       onRequestClose={() => setIsOpenModal(false)}

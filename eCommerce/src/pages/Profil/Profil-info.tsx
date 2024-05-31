@@ -16,6 +16,7 @@ export default function ProfilInfo() {
   const addAddress = () => {
     console.log('add Address');
   };
+
   if (!userData) {
     return (
       <Modal
@@ -47,8 +48,17 @@ export default function ProfilInfo() {
           </div>
           <div className="max-h-max overflow-auto">
             <div className="py-8 grow flex flex-col justify-center items-center gap-8">
-              <UserAdress country={userData?.addresses[0].country} zipCode="s123" city="Minsk" street="best" />
-              <UserAdress country="BLR" zipCode="s123" city="Minsk" street="best" isShipping />
+              {userData?.addresses.map((address) => {
+                return (
+                  <UserAdress
+                    key={address.id}
+                    country={address.country}
+                    zipCode={address.postalCode}
+                    city={address.city}
+                    street={address.streetName}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
