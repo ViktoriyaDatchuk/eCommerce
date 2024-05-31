@@ -1,5 +1,5 @@
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
-import Modal from 'react-modal';
+
 import { useState } from 'react';
 
 import Page from '../../components/Page';
@@ -8,6 +8,7 @@ import ProfilDataInfo from '../../components/Profile-data/ProfilData';
 
 import EditButton from '../../components/EditButton';
 import useCurrentUser from '../../user/getCurrentUser';
+import LoadingModal from './LoadingModal';
 
 export default function ProfilInfo() {
   const userData = useCurrentUser();
@@ -18,16 +19,7 @@ export default function ProfilInfo() {
   };
 
   if (!userData) {
-    return (
-      <Modal
-        className="max-w-lg p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
-        overlayClassName="p-8 fixed flex justify-center items-center inset-0 bg-gray-900 z-50"
-        isOpen={isOpenModal}
-        onRequestClose={() => setIsOpenModal(false)}
-      >
-        <h2 className="text-xl font-bold text-teal-400">Loading...</h2>
-      </Modal>
-    );
+    return <LoadingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />;
   }
 
   return (

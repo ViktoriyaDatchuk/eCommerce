@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import Button from '../../components/Button';
 import InputModal from '../../components/InputModal';
 import useCurrentUser from '../../user/getCurrentUser';
+import LoadingModal from './LoadingModal';
 
 interface EditProfilModalProps {
   modalName: string;
@@ -15,16 +16,7 @@ export default function EditProfilModal({ modalName, isOpenModal, setIsOpenModal
   const userData = useCurrentUser();
 
   if (!userData) {
-    return (
-      <Modal
-        className="max-w-lg p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
-        overlayClassName="p-8 fixed flex justify-center items-center inset-0 bg-black bg-opacity-70 z-50"
-        isOpen={isOpenModal}
-        onRequestClose={() => setIsOpenModal(false)}
-      >
-        <h2 className="text-xl font-bold text-teal-400">Loading...</h2>
-      </Modal>
-    );
+    return <LoadingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />;
   }
 
   return (
