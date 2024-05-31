@@ -1,36 +1,29 @@
-// import { useForm } from 'react-hook-form';
-// import Button from './Button';
+import { useEffect, useState } from 'react';
 
-// interface InputModalProps {
-//   type: string;
-//   title: string;
-//   submitForm: () => void;
-// }
+interface InputModalProps {
+  type: string;
+  title: string;
+  value?: string;
+}
 
-// export default function InputModal({ type, title, submitForm }: InputModalProps) {
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors },
-//   } = useForm({ mode: 'all' });
+export default function InputModal({ type, title, value = '' }: InputModalProps) {
+  const [inputValue, setInputValue] = useState(value);
 
-//   return (
-//     <form onSubmit={handleSubmit(submitForm)}>
-//       <label htmlFor={title}>
-//         <input
-//           type={type}
-//           id={title}
-//           placeholder={`Enter new ${title}`}
-//           {...register('firstName', {
-//             required: ErrorMessagesReg.REQUIRED,
-//             pattern: {
-//               value: /^[A-Za-z]+$/,
-//               message: ErrorMessagesReg.NAME_FORMAT,
-//             },
-//           })}
-//         />
-//         <Button text="edit" isPrimary onClick={submitForm} submit />
-//       </label>
-//     </form>
-//   );
-// }
+  useEffect(() => {
+    setInputValue(value);
+  }, [value]);
+
+  return (
+    <label htmlFor={title} className="flex flex-col">
+      <div className="flex gap-2 capitalize text-orange-400">{title}</div>
+      <input
+        className="px-1 rounded-sm"
+        type={type}
+        id={title}
+        placeholder={`Enter new ${title}`}
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+    </label>
+  );
+}

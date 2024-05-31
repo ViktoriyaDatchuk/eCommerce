@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
+import { Customer } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default async function getCurrentUser() {
+async function getCurrentUser() {
   const user = localStorage.getItem('commercetools_user');
 
   if (user) {
@@ -19,4 +21,22 @@ export default async function getCurrentUser() {
     console.error('User token or data not found in local storage');
   }
   return null;
+}
+
+export default function useCurrentUser() {
+  const [userData, setUserData] = useState<Customer | null>(null);
+
+  useEffect(() => {
+    getCurrentUser()
+      .then((data) => {
+        if (data) {
+          setUserData(data);
+        }
+      })
+      .catch((error: Error) => {
+        console.log(`'UseCurrentUser error:'${error}`);
+      });
+  }, []);
+
+  return userData;
 }

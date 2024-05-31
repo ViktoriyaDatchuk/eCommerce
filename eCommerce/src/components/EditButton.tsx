@@ -3,7 +3,7 @@ import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 interface EditButtonProps {
   icon: IconProp;
-  onClick: () => void;
+  onClick?: () => void;
   size?: SizeProp;
 }
 
