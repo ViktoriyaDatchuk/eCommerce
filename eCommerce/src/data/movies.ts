@@ -1,25 +1,23 @@
+import {
+  Asset,
+  CategoryOrderHints,
+  CategoryReference,
+  LastModifiedBy,
+  LocalizedString,
+  ProductVariant,
+  ProductVariantAvailability,
+} from '@commercetools/platform-sdk';
+
 /* eslint-disable no-use-before-define */
-interface Movie {
+export interface Movie {
   id: string;
   version: number;
-  versionModifiedAt: string;
-  lastMessageSequenceNumber: number;
+  versionModifiedAt?: string;
+  lastMessageSequenceNumber?: number;
   createdAt: string;
   lastModifiedAt: string;
-  lastModifiedBy: {
-    isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
-  };
-  createdBy: {
-    isPlatformClient: boolean;
-    user: {
-      typeId: string;
-      id: string;
-    };
-  };
+  lastModifiedBy?: LastModifiedBy;
+  createdBy?: LastModifiedBy;
   productType: {
     typeId: string;
     id: string;
@@ -30,49 +28,36 @@ interface Movie {
     published: boolean;
     hasStagedChanges: boolean;
   };
-  key: string;
-  priceMode: string;
-  lastVariantId: number;
+  key?: string;
+  priceMode?: string;
+  lastVariantId?: number;
 }
 
 interface MovieData {
-  name: {
-    'en-US': string;
-  };
-  categories: string[];
-  categoryOrderHints: object;
-  slug: {
-    'en-US': string;
-  };
-  metaTitle: {
-    'en-US': string;
-  };
-  metaDescription: {
-    'en-US': string;
-  };
+  name: LocalizedString;
+  categories: CategoryReference[];
+  categoryOrderHints?: CategoryOrderHints;
+  slug?: LocalizedString;
+  metaTitle?: LocalizedString;
+  metaDescription?: LocalizedString;
   masterVariant: {
     id: number;
-    sku: string;
-    key: string;
-    prices: PriceObject[];
-    images: ImageMovie[];
-    attributes: AttributeMovie[];
-    assets: [];
-    availability: {
-      isOnStock: boolean;
-      availableQuantity: number;
-      version: number;
-      id: string;
-    };
+    sku?: string;
+    key?: string;
+    prices?: PriceObject[];
+    images?: ImageMovie[];
+    attributes?: AttributeMovie[];
+    assets?: Asset[];
+    availability?: ProductVariantAvailability;
   };
-  variants: [];
+  variants: ProductVariant[];
   searchKeywords: object;
 }
 
-interface PriceObject {
+export interface PriceObject {
   id: string;
   value: PriceValue;
-  discounted: {
+  discounted?: {
     value: PriceValue;
     discount: {
       typeId: string;
@@ -88,7 +73,7 @@ interface PriceValue {
   fractionDigits: number;
 }
 
-interface ImageMovie {
+export interface ImageMovie {
   url: string;
   dimensions: {
     w: number;
@@ -101,7 +86,7 @@ export interface AttributeMovie {
   value: string;
 }
 
-export const movie: Movie = {
+export const movie = {
   id: '9bbd415f-8e50-437d-91b8-9f7fc2ca7098',
   version: 17,
   versionModifiedAt: '2024-05-29T14:19:30.595Z',
