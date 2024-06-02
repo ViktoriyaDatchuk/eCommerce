@@ -3,6 +3,7 @@ import { ImageMovie } from '../data/movies';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import SlideNextButton from './SlideNextButton';
+import SlidePrevButton from './SlidePrevButton';
 
 interface SliderProps {
   slides: ImageMovie[];
@@ -22,6 +23,7 @@ export default function Slider({ slides }: SliderProps) {
           <img src={slide.url} alt={slide.url} className="w-full rounded-xl" />
         </SwiperSlide>
       ))}
+      <SlidePrevButton />
       <SlideNextButton />
     </Swiper>
   );
