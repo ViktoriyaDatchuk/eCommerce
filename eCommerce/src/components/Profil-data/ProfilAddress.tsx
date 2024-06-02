@@ -29,6 +29,7 @@ export default function UserAdress({
   const deleteAddress = () => {
     console.log('delete');
   };
+
   return (
     <div className="flex flex-col">
       {shippingAddress && (

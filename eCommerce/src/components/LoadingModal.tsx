@@ -6,7 +6,6 @@ interface LoadingModalProps {
 }
 
 export default function LoadingModal({ isOpenModal, setIsOpenModal }: LoadingModalProps) {
-  Modal.setAppElement('#root');
   return (
     <Modal
       className="max-w-lg p-5 bg-gray-900 inset-x-0 rounded-md outline-none"

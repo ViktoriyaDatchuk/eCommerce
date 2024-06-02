@@ -3,28 +3,33 @@ import { useState } from 'react';
 import { Address } from '@commercetools/platform-sdk';
 
 import Page from '../../components/Page';
-import UserAdress from '../../components/Profile-data/ProfilAddressInfo';
-import ProfilDataInfo from '../../components/Profile-data/ProfilData';
+import UserAdress from '../../components/Profil-data/ProfilAddress';
+import ProfilDataInfo from '../../components/Profil-data/ProfilData';
 
 import EditButton from '../../components/EditButton';
 import useCurrentUser from '../../user/getCurrentUser';
 import LoadingModal from '../../components/LoadingModal';
+import EditProfilModal from './ProfilModal';
 
 export default function ProfilInfo() {
   const userData = useCurrentUser();
-  const [isOpenModal, setIsOpenModal] = useState(true);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isAddAddress, setIsAddAddress] = useState(false);
 
   const addAddress = () => {
-    console.log('add Address');
+    setIsAddAddress(true);
   };
 
-  if (!userData) {
-    return <LoadingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />;
+  if (!userData && !isOpenModal) {
+    return <LoadingModal isOpenModal setIsOpenModal={setIsOpenModal} />;
   }
 
   return (
     <Page className="w-full h-full flex justify-center">
       <div className="max-w-5xl w-full pt-20 flex flex-wrap justify-between">
+        {isAddAddress && (
+          <EditProfilModal modalName="address" isOpenModal={isAddAddress} setIsOpenModal={setIsAddAddress} addAddress />
+        )}
         <div className="p-8 flex">
           <ProfilDataInfo
             first={userData?.firstName}
@@ -44,10 +49,12 @@ export default function ProfilInfo() {
                 if (!address.id) {
                   return null;
                 }
+
                 const isBillingAddress = userData.billingAddressIds?.includes(address.id);
                 const isShippingAddress = userData.shippingAddressIds?.includes(address.id);
                 const isBillingDefault = userData.defaultBillingAddressId === address?.id;
                 const isShippingDefault = userData.defaultShippingAddressId === address?.id;
+
                 return (
                   <UserAdress
                     key={address.id}
