@@ -1,19 +1,16 @@
-import Modal from 'react-modal';
+import { RotatingLines } from 'react-loader-spinner';
 
-interface LoadingModalProps {
-  isOpenModal: boolean;
-  setIsOpenModal: (open: boolean) => void;
-}
-
-export default function LoadingModal({ isOpenModal, setIsOpenModal }: LoadingModalProps) {
+export default function LoadingModal() {
   return (
-    <Modal
-      className="max-w-lg p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
-      overlayClassName="p-8 fixed flex justify-center items-center inset-0 bg-gray-900 bg-opacity-70 z-50"
-      isOpen={isOpenModal}
-      onRequestClose={() => setIsOpenModal(false)}
-    >
-      <h2 className="text-xl font-bold text-teal-400">Loading...</h2>
-    </Modal>
+    <div className="absolute w-full h-full bg-black opacity-70 flex inset-0 justify-center items-center z-50">
+      <RotatingLines
+        visible
+        width="60"
+        strokeWidth="3"
+        strokeColor="rgb(251 146 60)"
+        animationDuration="0.75"
+        ariaLabel="rotating-lines-loading"
+      />
+    </div>
   );
 }

@@ -13,16 +13,12 @@ import EditProfilModal from './ProfilModal';
 
 export default function ProfilInfo() {
   const userData = useCurrentUser();
-  const [isOpenModal, setIsOpenModal] = useState(false);
+
   const [isAddAddress, setIsAddAddress] = useState(false);
 
   const addAddress = () => {
     setIsAddAddress(true);
   };
-
-  if (!userData && !isOpenModal) {
-    return <LoadingModal isOpenModal setIsOpenModal={setIsOpenModal} />;
-  }
 
   return (
     <Page className="w-full h-full flex justify-center">
@@ -30,6 +26,7 @@ export default function ProfilInfo() {
         {isAddAddress && (
           <EditProfilModal modalName="address" isOpenModal={isAddAddress} setIsOpenModal={setIsAddAddress} addAddress />
         )}
+        {!userData && <LoadingModal />}
         <div className="p-8 flex">
           <ProfilDataInfo
             first={userData?.firstName}

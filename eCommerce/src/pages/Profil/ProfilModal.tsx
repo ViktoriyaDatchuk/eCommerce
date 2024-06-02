@@ -26,7 +26,7 @@ export default function ProfilModal({
   const userData = useCurrentUser();
 
   if (!userData) {
-    return <LoadingModal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} />;
+    return <LoadingModal />;
   }
 
   return (
