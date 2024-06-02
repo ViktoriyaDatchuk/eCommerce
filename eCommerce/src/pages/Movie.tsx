@@ -4,6 +4,7 @@ import { AttributeMovie, ImageMovie, PriceObject } from '../data/movies';
 import apiRoot from '../sdk/apiRoot';
 import Page from '../components/Page';
 import Button from '../components/Button';
+import Slider from '../components/Slider';
 
 interface SelectedFilm {
   images?: ImageMovie[];
@@ -22,7 +23,7 @@ export default function MoviePage() {
   }, []);
 
   const containerStyle = 'max-w-[1309px] flex flex-col items-center sm:flex-row sm:items-stretch gap-8 my-4 mx-4';
-  const imageStyle = 'max-w-[300px] drop-shadow-[0_4px_30px_rgba(24,201,176,1)] rounded-xl';
+  const imageStyle = 'max-w-[300px] drop-shadow-[0_4px_30px_rgba(24,201,176,1)]';
   const descriptionContainerStyle = 'flex flex-col justify-between my-1 mx-11';
   const descriptionStyle = 'flex flex-col items-start gap-5 text-white font-medium ml-7 mt-3';
   const parStyle = 'text-left mb-4';
@@ -57,8 +58,9 @@ export default function MoviePage() {
     <Page className="flex justify-center items-center h-max sm:h-full">
       {film.images ? (
         <div className={containerStyle}>
-          <div>
-            <img src={film.images![0].url} alt="movie" className={imageStyle} />
+          <div className={imageStyle}>
+            {/* <img src={film.images![0].url} alt="movie" className={imageStyle} /> */}
+            <Slider slides={film.images!} />
           </div>
           <div className={descriptionContainerStyle}>
             <div className={descriptionStyle}>
