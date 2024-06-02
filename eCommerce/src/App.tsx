@@ -5,11 +5,10 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Collection from './pages/Collection/Collection';
 import Page404 from './pages/Page404';
-
-import './App.css';
 import ProfilInfo from './pages/Profil/Profil-info';
 import ProfilEdit from './pages/Profil/Profil-edit';
 import Movie from './pages/Movie';
+import './App.css';
 
 function App() {
   return (
