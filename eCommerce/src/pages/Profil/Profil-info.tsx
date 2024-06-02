@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Address } from '@commercetools/platform-sdk';
 
 import Page from '../../components/Page';
-import UserAdress from '../../components/Profil-data/ProfilAddress';
+import ProfilAdress from '../../components/Profil-data/ProfilAddress';
 import ProfilDataInfo from '../../components/Profil-data/ProfilData';
 
 import EditButton from '../../components/EditButton';
@@ -24,7 +24,12 @@ export default function ProfilInfo() {
     <Page className="w-full h-full flex justify-center">
       <div className="max-w-5xl w-full pt-20 flex flex-wrap justify-between">
         {isAddAddress && (
-          <EditProfilModal modalName="address" isOpenModal={isAddAddress} setIsOpenModal={setIsAddAddress} addAddress />
+          <EditProfilModal
+            modalName="Add address"
+            isOpenModal={isAddAddress}
+            setIsOpenModal={setIsAddAddress}
+            addAddress
+          />
         )}
         {!userData && <LoadingModal />}
         <div className="p-8 flex">
@@ -53,10 +58,11 @@ export default function ProfilInfo() {
                 const isShippingDefault = userData.defaultShippingAddressId === address?.id;
 
                 return (
-                  <UserAdress
+                  <ProfilAdress
                     key={address.id}
+                    id={address.id}
                     country={address.country}
-                    zipCode={address.postalCode}
+                    postalCode={address.postalCode}
                     city={address.city}
                     street={address.streetName}
                     billingAddress={isBillingAddress}

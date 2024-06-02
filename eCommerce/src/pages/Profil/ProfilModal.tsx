@@ -11,8 +11,12 @@ interface EditProfilModalProps {
   isOpenModal: boolean;
   setIsOpenModal: (open: boolean) => void;
   editData?: boolean;
-  // editAddress?: boolean;
+  editAddress?: boolean;
   addAddress?: boolean;
+  shipping?: boolean;
+  billing?: boolean;
+  billingDefault?: boolean;
+  shippingDefault?: boolean;
 }
 
 export default function ProfilModal({
@@ -20,8 +24,12 @@ export default function ProfilModal({
   isOpenModal,
   setIsOpenModal,
   editData,
-  // editAddress,
+  editAddress,
   addAddress,
+  shipping,
+  billing,
+  billingDefault,
+  shippingDefault,
 }: EditProfilModalProps) {
   const userData = useCurrentUser();
 
@@ -38,6 +46,16 @@ export default function ProfilModal({
     >
       {editData && <EditProfileData userData={userData} modalName={modalName} setIsOpenModal={setIsOpenModal} />}
       {addAddress && <AddAddress modalName={modalName} setIsOpenModal={setIsOpenModal} />}
+      {editAddress && (
+        <AddAddress
+          modalName={modalName}
+          setIsOpenModal={setIsOpenModal}
+          shipping={shipping}
+          billing={billing}
+          billingDefault={billingDefault}
+          shippingDefault={shippingDefault}
+        />
+      )}
     </Modal>
   );
 }

@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import EditButton from '../EditButton';
+import ProfilModal from '../../pages/Profil/ProfilModal';
 
 interface AddressInfo {
+  id: string;
   country: string | undefined;
-  zipCode: string | undefined;
+  postalCode: string | undefined;
   city: string | undefined;
   street: string | undefined;
   shippingAddress: boolean | undefined;
@@ -12,9 +15,10 @@ interface AddressInfo {
   defaultShipping: boolean;
 }
 
-export default function UserAdress({
+export default function ProfilAdress({
+  id,
   country,
-  zipCode,
+  postalCode,
   city,
   street,
   shippingAddress,
@@ -23,36 +27,52 @@ export default function UserAdress({
   defaultShipping,
 }: AddressInfo) {
   const style = 'mb-2 flex gap-5 text-xl text-teal-400';
-  const editAddress = () => {
-    console.log('edit');
+
+  const [isEditAddress, setIsEditAddress] = useState(false);
+
+  const editCurrentAddress = () => {
+    setIsEditAddress(true);
   };
-  const deleteAddress = () => {
-    console.log('delete');
+
+  const deleteCurrentAddress = (addressId: string) => {
+    console.log(addressId);
   };
 
   return (
     <div className="flex flex-col">
+      {isEditAddress && (
+        <ProfilModal
+          modalName="Edit address"
+          isOpenModal
+          setIsOpenModal={setIsEditAddress}
+          shipping={shippingAddress}
+          billing={billingAddress}
+          billingDefault={defaultBilling}
+          shippingDefault={defaultShipping}
+          editAddress
+        />
+      )}
       {shippingAddress && (
         <div className={style}>
           {!defaultShipping && <p>Shipping</p>}
           {defaultShipping && <p>Shipping(default)</p>}
-          <EditButton icon={faPen} onClick={editAddress} />
-          <EditButton icon={faTrash} onClick={deleteAddress} />
+          <EditButton icon={faPen} onClick={editCurrentAddress} />
+          <EditButton icon={faTrash} onClick={() => deleteCurrentAddress(id)} />
         </div>
       )}
       {billingAddress && (
         <div className={style}>
           {!defaultBilling && <p>Billing</p>}
           {defaultBilling && <p>Billing(default)</p>}
-          <EditButton icon={faPen} onClick={editAddress} />
-          <EditButton icon={faTrash} onClick={deleteAddress} />
+          <EditButton icon={faPen} onClick={editCurrentAddress} />
+          <EditButton icon={faTrash} onClick={() => deleteCurrentAddress(id)} />
         </div>
       )}
       <div className="w-full flex flex-col text-left">
         <div className="flex justify-between flex-wrap gap-12 text-lg text-white sm:gap-20">
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap gap-5 text-xl text-orange-400">
             <p>Country: {country}</p>
-            <p>Zip-code: {zipCode}</p>
+            <p>Postal code: {postalCode}</p>
             <p>City: {city}</p>
             <p>Street: {street}</p>
           </div>
