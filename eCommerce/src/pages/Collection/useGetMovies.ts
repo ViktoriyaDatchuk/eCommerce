@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import apiRoot from '../../sdk/apiRoot';
 
-const LIMIT = 2;
+const LIMIT = 5;
 
 const fetchProductsPage = async (limit: number, offset: number) => {
   const response = await apiRoot.products().get({ queryArgs: { limit, offset } }).execute();
