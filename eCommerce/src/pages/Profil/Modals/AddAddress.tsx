@@ -115,7 +115,7 @@ export default function AddAddress({
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <CountryListModal defaultValue={country || ''} />
+        <CountryListModal defaultValue={country || ''} register={register} />
         <InputModal type="text" title="city" value={city || ''} register={register} />
         <InputModal type="text" title="postCode" value={postalCode || ''} register={register} />
         <InputModal type="text" title="street" value={street || ''} register={register} />
