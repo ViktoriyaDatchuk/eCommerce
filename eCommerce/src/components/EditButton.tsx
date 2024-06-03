@@ -1,14 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 
 interface EditButtonProps {
-  onClick: () => void;
+  icon: IconProp;
+  onClick?: () => void;
+  size?: SizeProp;
+  id?: string;
 }
 
-export default function EditButton({ onClick }: EditButtonProps) {
+export default function EditButton({ icon, onClick, size = 'sm', id }: EditButtonProps) {
   return (
-    <button type="button" onClick={onClick}>
-      <FontAwesomeIcon icon={faPen} size="sm" style={{ color: '#fb923c' }} />
+    <button type="button" id={id} onClick={onClick}>
+      <FontAwesomeIcon icon={icon} size={size} style={{ color: '#fb923c' }} />
     </button>
   );
 }

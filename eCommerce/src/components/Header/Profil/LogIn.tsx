@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../Button';
+import useCurrentUser from '../../../user/getCurrentUser';
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -9,8 +10,7 @@ export default function LogIn() {
     navigate('/');
   };
 
-  const userString = localStorage.getItem('commercetools_user');
-  const user = userString ? JSON.parse(userString) : null;
+  const user = useCurrentUser();
 
   return (
     <>
@@ -19,7 +19,7 @@ export default function LogIn() {
       </div>
       <div>
         <Button
-          text={`${user.firstName} ${user.lastName}`}
+          text={`${user?.firstName} ${user?.lastName}`}
           isPrimary={false}
           onClick={() => navigate('/profil-info')}
           addClass="bg-transparent text-orange-400 font-normal hover:bg-transparent hover:underline"

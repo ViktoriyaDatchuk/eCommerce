@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import Modal from 'react-modal';
 
 import Main from './pages/main';
 import SignIn from './pages/SignIn';
@@ -11,6 +12,8 @@ import Movie from './pages/Movie';
 import './App.css';
 
 const queryClient = new QueryClient();
+
+Modal.setAppElement('#root');
 
 function App() {
   return (
