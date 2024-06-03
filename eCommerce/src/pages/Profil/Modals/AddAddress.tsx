@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+
 import Button from '../../../components/Button';
 import CheckBoxModal from '../../../components/CheckBoxModal';
 import CountryListModal from '../../../components/CountryListModal';
-import InputModal from '../../../components/InputModal';
+import InputModal, { EditProfileModalData } from '../../../components/InputModal';
+import { IFormInput } from '../../SignUp';
 
 interface AddAddressProps {
   modalName: string;
@@ -68,8 +71,17 @@ export default function AddAddress({
     }
   };
 
+  const {
+    register,
+    handleSubmit,
+    // reset,
+    // formState: { errors },
+  } = useForm<Partial<IFormInput>>({});
+  const onSubmit = (data: EditProfileModalData) => {
+    console.log(data);
+  };
   return (
-    <form action="" className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <h2 className="text-xl font-bold text-teal-400">{modalName}</h2>
       <div className="w-full">
         <div className="w-full flex justify-between">
@@ -93,9 +105,9 @@ export default function AddAddress({
       </div>
       <div className="flex flex-col gap-4">
         <CountryListModal defaultValue={country || ''} />
-        <InputModal type="text" title="city" value={city || ''} />
-        <InputModal type="text" title="postalCode" value={postalCode || ''} />
-        <InputModal type="text" title="street" value={street || ''} />
+        <InputModal type="text" title="city" value={city || ''} register={register} />
+        <InputModal type="text" title="postCode" value={postalCode || ''} register={register} />
+        <InputModal type="text" title="street" value={street || ''} register={register} />
       </div>
       <div className="flex gap-5">
         <Button text="close" isPrimary onClick={() => setIsOpenModal(false)} />
