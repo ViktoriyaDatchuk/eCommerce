@@ -15,7 +15,7 @@ export default function LogIn() {
   return (
     <>
       <div>
-        <img src="disc.png" alt="disc" />
+        <img src="/disc.png" alt="disc" />
       </div>
       <div>
         <Button

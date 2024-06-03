@@ -6,9 +6,9 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Collection from './pages/Collection/Collection';
 import Page404 from './pages/Page404';
-
-import './App.css';
 import ProfilInfo from './pages/Profil/Profil-info';
+import Movie from './pages/Movie';
+import './App.css';
 
 const queryClient = new QueryClient();
 
@@ -19,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/movie-collection" element={<Collection />} />
+          <Route path="/movie-collection/:id" element={<Movie />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profil-info" element={<ProfilInfo />} />
