@@ -1,36 +1,24 @@
-// import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-// const LIMIT = 5;
-// const apiUrl = `https://json-placeholder.mock.beeceptor.com/photos?_start=1&_limit=${LIMIT}`;
-// const getApiUrl = (cursor) => `https://jsonplaceholder.typicode.com/comments?_start=${cursor}&_limit=${LIMIT}`;
+const LIMIT = 5;
 
-// const fetchMovies = async ({ pageParam }) => {
-//   const res = await fetch(getApiUrl(pageParam));
-//   return res.json();
-// };
+const getApiUrl = (cursor: number) => `https://jsonplaceholder.typicode.com/comments?_start=${cursor}&_limit=${LIMIT}`;
 
-// export default function useGetMovies() {
-//   const { isFetching, data } = useQuery({
-//     queryFn: () => fetch(apiUrl).then((response) => response.json()),
-//     queryKey: ['movies'],
-//   });
+const fetchMovies = async ({ pageParam = 0 }) => {
+  const res = await fetch(getApiUrl(pageParam));
+  return res.json();
+};
 
-//   return {
-//     movies: data,
-//     isFetching,
-//   };
-// }
+export default function useGetMoviesInfinite() {
+  const { isFetching, data, fetchNextPage } = useInfiniteQuery({
+    queryKey: ['movies-infinite'],
+    queryFn: fetchMovies,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      console.log(lastPage, pages);
+      return lastPage.length;
+    },
+  });
 
-// export function useGetMoviesInfinite() {
-//   const { isFetching, data, fetchNextPage } = useInfiniteQuery({
-//     queryKey: ['movies-infinite'],
-//     queryFn: fetchMovies,
-//     initialPageParam: 0,
-//     getNextPageParam: (lastPage, pages) => {
-//       console.log(lastPage);
-//       return lastPage.length;
-//     },
-//   });
-
-//   return { data, isFetching, fetchNextPage };
-// }
+  return { data, isFetching, fetchNextPage };
+}
