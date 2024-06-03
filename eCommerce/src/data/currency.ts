@@ -2,6 +2,8 @@ interface Currency {
   [EUR: string]: string;
 }
 
-export const currency: Currency = {
+const currency: Currency = {
   EUR: '€',
 };
+
+export default currency;

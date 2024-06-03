@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
-import Slider from './Slider';
 import { Image } from '@commercetools/platform-sdk';
+import Slider from './Slider';
 import Button from './Button';
 
 const portal = document.getElementById('portal') as HTMLElement;

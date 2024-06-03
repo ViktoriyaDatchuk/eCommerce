@@ -6,7 +6,7 @@ import Page from '../components/Page';
 import Button from '../components/Button';
 import Slider from '../components/Slider';
 import MovieModal from '../components/MovieModal';
-import { currency } from '../data/currency';
+import currency from '../data/currency';
 
 interface SelectedFilm {
   images: Image[] | undefined;
