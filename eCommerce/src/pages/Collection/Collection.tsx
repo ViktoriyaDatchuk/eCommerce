@@ -22,6 +22,7 @@ export default function Collection() {
           rowGap: '20px',
           justifyContent: 'center',
           marginTop: '40px',
+          paddingBottom: '20px',
         }}
       >
         {data?.pages
