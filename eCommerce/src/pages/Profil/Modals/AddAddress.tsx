@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import Button from '../../../components/Button';
@@ -23,10 +23,10 @@ interface AddAddressProps {
 export default function AddAddress({
   modalName,
   setIsOpenModal,
-  billing,
-  shipping,
-  billingDefault,
-  shippingDefault,
+  billing = true,
+  shipping = false,
+  billingDefault = false,
+  shippingDefault = false,
   country,
   city,
   postalCode,
@@ -45,6 +45,7 @@ export default function AddAddress({
       setIsShippingDefault(false);
     } else {
       setIsBillingDefault(false);
+      setIsShippingChecked(true);
     }
   };
 
@@ -56,6 +57,7 @@ export default function AddAddress({
       setIsBillingDefault(false);
     } else {
       setIsShippingDefault(false);
+      setIsBillingChecked(true);
     }
   };
 
@@ -74,9 +76,18 @@ export default function AddAddress({
   const {
     register,
     handleSubmit,
+    setValue,
     // reset,
     // formState: { errors },
   } = useForm<Partial<IFormInput>>({});
+
+  useEffect(() => {
+    setValue('isBilling', isBillingChecked);
+    setValue('isShipping', isShippingChecked);
+    setValue('isBillingDefault', isBillingDefault);
+    setValue('isShippingDefault', isShippingDefault);
+  }, [isBillingChecked, isShippingChecked, isBillingDefault, isShippingDefault, setValue]);
+
   const onSubmit = (data: EditProfileModalData) => {
     console.log(data);
   };

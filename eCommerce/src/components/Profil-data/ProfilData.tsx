@@ -6,19 +6,23 @@ import Button from '../Button';
 import EditButton from '../EditButton';
 import EditProfilModal from '../../pages/Profil/ProfilModal';
 
-interface ProfileInfo {
+interface ProfilInfo {
   first: string | undefined;
   last: string | undefined;
-  data: string | undefined;
+  birthData: string | undefined;
   email: string | undefined;
 }
 
-export default function ProfileDataInfo({ first, last, data, email }: ProfileInfo) {
+export default function ProfilDataInfo({ first, last, birthData, email }: ProfilInfo) {
   const [isEditProfil, setIsEditProfil] = useState(false);
   const navigate = useNavigate();
 
   const editProfile = () => {
     setIsEditProfil(true);
+  };
+
+  const changePassword = () => {
+    console.log('changePass');
   };
 
   return (
@@ -33,11 +37,12 @@ export default function ProfileDataInfo({ first, last, data, email }: ProfileInf
       <div className="min-h-36 flex flex-col gap-2 text-left text-orange-400">
         <p>{first}</p>
         <p>{last}</p>
-        <p>{data}</p>
+        <p>{birthData}</p>
         <p>{email}</p>
       </div>
       <div className="flex gap-5">
         <Button text="back" isPrimary onClick={() => navigate(-1)} />
+        <Button text="change password" isPrimary onClick={() => changePassword} />
       </div>
     </div>
   );

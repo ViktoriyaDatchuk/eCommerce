@@ -32,15 +32,15 @@ export default function ProfilInfo() {
           />
         )}
         {!userData && <LoadingModal />}
-        <div className="p-8 flex">
+        <div className="pl-4 flex">
           <ProfilDataInfo
             first={userData?.firstName}
             last={userData?.lastName}
-            data={userData?.dateOfBirth}
+            birthData={userData?.dateOfBirth}
             email={userData?.email}
           />
         </div>
-        <div className="p-8 flex flex-col items-start ">
+        <div className="flex flex-col items-start ">
           <div className="flex items-center gap-5">
             <p className="text-xl font-bold text-teal-400">Adresses</p>
             <EditButton icon={faPlus} onClick={addAddress} size="lg" />
