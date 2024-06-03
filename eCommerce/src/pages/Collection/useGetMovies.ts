@@ -1,36 +1,31 @@
-// import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import apiRoot from '../../sdk/apiRoot';
 
-// const LIMIT = 5;
-// const apiUrl = `https://json-placeholder.mock.beeceptor.com/photos?_start=1&_limit=${LIMIT}`;
-// const getApiUrl = (cursor) => `https://jsonplaceholder.typicode.com/comments?_start=${cursor}&_limit=${LIMIT}`;
+const LIMIT = 5;
 
-// const fetchMovies = async ({ pageParam }) => {
-//   const res = await fetch(getApiUrl(pageParam));
-//   return res.json();
-// };
+const fetchProductsPage = async (limit: number, offset: number) => {
+  const response = await apiRoot.products().get({ queryArgs: { limit, offset } }).execute();
 
-// export default function useGetMovies() {
-//   const { isFetching, data } = useQuery({
-//     queryFn: () => fetch(apiUrl).then((response) => response.json()),
-//     queryKey: ['movies'],
-//   });
+  return response.body;
+};
 
-//   return {
-//     movies: data,
-//     isFetching,
-//   };
-// }
+const fetchMovies = async ({ pageParam = 0 }) => {
+  const res = await fetchProductsPage(LIMIT, pageParam);
 
-// export function useGetMoviesInfinite() {
-//   const { isFetching, data, fetchNextPage } = useInfiniteQuery({
-//     queryKey: ['movies-infinite'],
-//     queryFn: fetchMovies,
-//     initialPageParam: 0,
-//     getNextPageParam: (lastPage, pages) => {
-//       console.log(lastPage);
-//       return lastPage.length;
-//     },
-//   });
+  return res;
+};
 
-//   return { data, isFetching, fetchNextPage };
-// }
+export default function useGetMoviesInfinite() {
+  const { isFetching, data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['movies-infinite'],
+    queryFn: fetchMovies,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      const total = pages.map((page) => page.results).flat().length;
+
+      return total < lastPage.total! ? total : undefined;
+    },
+  });
+
+  return { data, isFetching, fetchNextPage, hasNextPage };
+}
