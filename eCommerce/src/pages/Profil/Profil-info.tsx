@@ -3,7 +3,7 @@ import { Customer } from '@commercetools/platform-sdk';
 import Page from '../../components/Page';
 import UserAdress from '../../components/Profile-data/ProfilAddressInfo';
 import ProfilDataInfo from '../../components/Profile-data/ProfilData';
-import getCurrentUser from '../../user/userData';
+import getCurrentUser from '../../user/getCurrentUser';
 
 export default function ProfilInfo() {
   const [userData, setUserData] = useState<Customer | null>(null);
