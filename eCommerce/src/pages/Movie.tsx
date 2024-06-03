@@ -1,11 +1,12 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ClientResponse, Product, Image, Attribute, Price } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 import Page from '../components/Page';
 import Button from '../components/Button';
 import Slider from '../components/Slider';
 import MovieModal from '../components/MovieModal';
-import { ClientResponse, Product, Image, Attribute, Price } from '@commercetools/platform-sdk';
+import { currency } from '../data/currency';
 
 interface SelectedFilm {
   images: Image[] | undefined;
@@ -55,7 +56,7 @@ export default function MoviePage() {
   };
 
   const getPrice = (price: number, digit: number, code: string): string => {
-    return `${price / 10 ** digit} ${code}`;
+    return `${code} ${price / 10 ** digit}`;
   };
 
   /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -103,7 +104,7 @@ export default function MoviePage() {
                     {getPrice(
                       film.prices![0].value.centAmount,
                       film.prices![0].value.fractionDigits,
-                      film.prices![0].value.currencyCode
+                      currency[film.prices![0].value.currencyCode]
                     )}
                   </p>
                   {film.prices![0].discounted && (
@@ -111,7 +112,7 @@ export default function MoviePage() {
                       {getPrice(
                         film.prices![0].discounted.value.centAmount,
                         film.prices![0].discounted.value.fractionDigits,
-                        film.prices![0].discounted.value.currencyCode
+                        currency[film.prices![0].discounted.value.currencyCode]
                       )}
                     </p>
                   )}

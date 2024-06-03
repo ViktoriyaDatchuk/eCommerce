@@ -1,13 +1,13 @@
 import ReactDOM from 'react-dom';
 import Slider from './Slider';
-import { ImageMovie } from '../data/movies';
+import { Image } from '@commercetools/platform-sdk';
 import Button from './Button';
 
 const portal = document.getElementById('portal') as HTMLElement;
 
 interface MovieModalProps {
   onClose: () => void;
-  images: ImageMovie[];
+  images: Image[];
 }
 
 export default function MovieModal({ onClose, images }: MovieModalProps) {
