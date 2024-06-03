@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '../../../components/Button';
 import CheckBoxModal from '../../../components/CheckBoxModal';
 import CountryListModal from '../../../components/CountryListModal';
 import InputModal, { EditProfileModalData } from '../../../components/InputModal';
 import { IFormInput } from '../../SignUp';
+import addNewAddress from '../../../user/addNewAddress';
 
 interface AddAddressProps {
   modalName: string;
@@ -18,6 +20,7 @@ interface AddAddressProps {
   city?: string;
   postalCode?: string;
   street?: string;
+  edit?: boolean;
 }
 
 export default function AddAddress({
@@ -31,6 +34,7 @@ export default function AddAddress({
   city,
   postalCode,
   street,
+  edit,
 }: AddAddressProps) {
   const [isBillingChecked, setIsBillingChecked] = useState(billing);
   const [isShippingChecked, setIsShippingChecked] = useState(shipping);
@@ -88,8 +92,14 @@ export default function AddAddress({
     setValue('isShippingDefault', isShippingDefault);
   }, [isBillingChecked, isShippingChecked, isBillingDefault, isShippingDefault, setValue]);
 
+  const navigate = useNavigate();
   const onSubmit = (data: EditProfileModalData) => {
-    console.log(data);
+    if (!edit) {
+      addNewAddress(data, navigate);
+      setIsOpenModal(false);
+    } else {
+      console.log(data);
+    }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">

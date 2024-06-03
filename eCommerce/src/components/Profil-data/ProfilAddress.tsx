@@ -39,7 +39,7 @@ export default function ProfilAdress({
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="w-full flex flex-col">
       {isEditAddress && (
         <ProfilModal
           modalName="Edit address"

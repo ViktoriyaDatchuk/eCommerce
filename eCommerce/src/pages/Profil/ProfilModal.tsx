@@ -54,6 +54,7 @@ export default function ProfilModal({
           billing={billing}
           billingDefault={billingDefault}
           shippingDefault={shippingDefault}
+          edit
         />
       )}
     </Modal>

@@ -1,6 +1,6 @@
 import { Customer } from '@commercetools/platform-sdk';
 import { useForm } from 'react-hook-form';
-
+import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
 import Button from '../../../components/Button';
@@ -38,8 +38,9 @@ export default function EditProfileData({ userData, modalName, setIsOpenModal }:
     });
   }, [userData, reset]);
 
+  const navigate = useNavigate();
   const onSubmit = (data: EditProfileModalData) => {
-    changeUserData(userData.id, userData.version, data);
+    changeUserData(userData.id, userData.version, data, navigate);
     setIsOpenModal(false);
   };
 

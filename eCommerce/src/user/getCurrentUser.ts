@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-async function getCurrentUser() {
+export async function getCurrentUser() {
   const user = localStorage.getItem('commercetools_user');
 
   if (user) {
