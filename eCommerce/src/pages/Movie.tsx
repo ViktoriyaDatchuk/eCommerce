@@ -1,20 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { AttributeMovie, ImageMovie, PriceObject } from '../data/movies';
 import apiRoot from '../sdk/apiRoot';
 import Page from '../components/Page';
 import Button from '../components/Button';
 import Slider from '../components/Slider';
 import MovieModal from '../components/MovieModal';
+import { ClientResponse, Product, Image, Attribute, Price } from '@commercetools/platform-sdk';
 
 interface SelectedFilm {
-  images?: ImageMovie[];
-  attributes?: AttributeMovie[];
-  prices?: PriceObject[];
+  images: Image[] | undefined;
+  attributes: Attribute[] | undefined;
+  prices: Price[] | undefined;
 }
 
 export default function MoviePage() {
-  const [film, setFilm] = useState<SelectedFilm>({});
+  const [film, setFilm] = useState({} as SelectedFilm);
   const [modal, setModal] = useState(false);
 
   const { id } = useParams();
@@ -44,7 +44,7 @@ export default function MoviePage() {
       .withKey({ key: id! })
       .get()
       .execute()
-      .then((response) => {
+      .then((response: ClientResponse<Product>) => {
         setFilm({
           images: response.body.masterData.current.masterVariant.images,
           attributes: response.body.masterData.current.masterVariant.attributes,
@@ -71,29 +71,30 @@ export default function MoviePage() {
                   setModal(true);
                 }
               }}
+              style={{ width: '300px' }}
             >
               <Slider slides={film.images!} />
             </div>
             <div className={descriptionContainerStyle}>
               <div className={descriptionStyle}>
                 <p className={parStyle}>
-                  {film.attributes!.find((value: AttributeMovie) => value.name === 'description')?.value}
+                  {film.attributes!.find((value: Attribute) => value.name === 'description')?.value}
                 </p>
                 <p>
                   <span className={titleClass}>Genre: </span>
-                  {film.attributes!.find((value: AttributeMovie) => value.name === 'genres')?.value}
+                  {film.attributes!.find((value: Attribute) => value.name === 'genres')?.value}
                 </p>
                 <p>
                   <span className={titleClass}>Country: </span>
-                  {film.attributes!.find((value: AttributeMovie) => value.name === 'country')?.value}
+                  {film.attributes!.find((value: Attribute) => value.name === 'country')?.value}
                 </p>
                 <p>
                   <span className={titleClass}>Duration: </span>
-                  {film.attributes!.find((value: AttributeMovie) => value.name === 'duration')?.value}
+                  {film.attributes!.find((value: Attribute) => value.name === 'duration')?.value}
                 </p>
                 <p className={secParStyle}>
                   <span className={titleClass}>Actors: </span>
-                  {film.attributes!.find((value: AttributeMovie) => value.name === 'casts')?.value}
+                  {film.attributes!.find((value: Attribute) => value.name === 'casts')?.value}
                 </p>
               </div>
               <div className={priceContainerStyle}>

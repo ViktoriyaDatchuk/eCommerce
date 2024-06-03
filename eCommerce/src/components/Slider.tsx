@@ -23,7 +23,7 @@ export default function Slider({ slides, isModal }: SliderProps) {
     >
       {slides.map((slide) => (
         <SwiperSlide key={slide.url}>
-          <img src={slide.url} alt={slide.url} className="rounded-xl" />
+          <img src={slide.url} alt={slide.url} className="rounded-xl" style={{ objectFit: 'cover' }} />
         </SwiperSlide>
       ))}
       {!isModal && <SlidePrevButton />}
