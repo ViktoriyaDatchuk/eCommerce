@@ -73,12 +73,7 @@ export default function AddAddress({
       <h2 className="text-xl font-bold text-teal-400">{modalName}</h2>
       <div className="w-full">
         <div className="w-full flex justify-between">
-          <CheckBoxModal
-            name="Billing"
-            checked={isBillingChecked}
-            onChange={handleBilling}
-            disabled={isShippingChecked}
-          />
+          <CheckBoxModal name="Billing" checked={isBillingChecked} onChange={handleBilling} />
           <CheckBoxModal
             name="Default"
             onChange={handleBillingDefault}
@@ -87,12 +82,7 @@ export default function AddAddress({
           />
         </div>
         <div className="w-full flex justify-between">
-          <CheckBoxModal
-            name="Shipping"
-            checked={isShippingChecked}
-            onChange={handleShipping}
-            disabled={isBillingChecked}
-          />
+          <CheckBoxModal name="Shipping" checked={isShippingChecked} onChange={handleShipping} />
           <CheckBoxModal
             onChange={handleShippingDefault}
             name="Default"
