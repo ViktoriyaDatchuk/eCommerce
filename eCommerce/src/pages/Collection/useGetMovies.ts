@@ -1,22 +1,18 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import apiRoot from '../../sdk/apiRoot';
 
-const LIMIT = 5;
+const LIMIT = 2;
 
 const fetchProductsPage = async (limit: number, offset: number) => {
   const response = await apiRoot.products().get({ queryArgs: { limit, offset } }).execute();
 
-  // console.log(response.body);
   return response.body;
 };
 
-// const getApiUrl = (cursor: number) => `https://jsonplaceholder.typicode.com/comments?_start=${cursor}&_limit=${LIMIT}`;
-
 const fetchMovies = async ({ pageParam = 0 }) => {
-  // const res = await fetch(getApiUrl(pageParam));
   const res = await fetchProductsPage(LIMIT, pageParam);
 
-  return res.results;
+  return res;
 };
 
 export default function useGetMoviesInfinite() {
@@ -25,8 +21,9 @@ export default function useGetMoviesInfinite() {
     queryFn: fetchMovies,
     initialPageParam: 0,
     getNextPageParam: (lastPage, pages) => {
-      console.log(lastPage, pages);
-      return lastPage.length;
+      const total = pages.map((page) => page.results).flat().length;
+
+      return total < lastPage.total! ? total : undefined;
     },
   });
 

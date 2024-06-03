@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom';
 import Button from './Button';
 
 interface CardProps {
+  filmKey: string;
   imgSrc: string;
   productName: string;
   genre: string;
   price: number;
   discountPrice: number;
-  year: string;
 }
 
 const cardStyle = 'w-80 rounded-md bg-slate-400/10 pb-3 hover:shadow-md hover:shadow-teal-400 hover:cursor-pointer';
@@ -17,7 +18,7 @@ const priceContainerStyle = 'mt-4';
 const priceStyle = 'text-decoration-line: line-through text-orange-400 mr-5';
 const discountPriceStyle = 'text-red-500 mr-5';
 
-export default function Product({ imgSrc, productName, genre, year, price, discountPrice }: CardProps) {
+export default function Product({ filmKey, imgSrc, productName, genre, price, discountPrice }: CardProps) {
   return (
     <div className={cardStyle}>
       <div style={{ height: '480px', marginBottom: '10px' }}>
@@ -29,12 +30,10 @@ export default function Product({ imgSrc, productName, genre, year, price, disco
         />
       </div>
       <div>
-        <a className={linkStyle} href="google.com">
+        <Link to={`/movie-collection/${filmKey}`} className={linkStyle}>
           {productName}
-        </a>
-        <p className={descriptionStyle}>
-          {genre}, {year}
-        </p>
+        </Link>
+        <p className={descriptionStyle}>{genre}</p>
         <p className={priceContainerStyle}>
           <span className={priceStyle}>€ {price}</span>
           <span className={discountPriceStyle}>€ {discountPrice}</span>
