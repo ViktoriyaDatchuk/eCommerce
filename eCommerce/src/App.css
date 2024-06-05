@@ -27,8 +27,10 @@ body {
 
 .swal-modal {
   background-color: #111827;
-  width: 50%;
+  max-width: 300px;
+  width: 100%;
 }
+
 .swal-modal ::before {
   background-color: #111827;
 }
@@ -44,7 +46,9 @@ body {
 
 .swal-icon--error + .swal-text {
   color: #f27474;
+  text-align: center;
 }
 .swal-icon--success + .swal-text {
   color: #fb923c;
+  text-align: center;
 }
