@@ -25,7 +25,7 @@ export default function deleteAddress(
     .then(() => {
       swal({
         icon: 'success',
-        text: 'Success',
+        text: 'Address was deleted',
       });
       navigate('/');
       setTimeout(() => {
