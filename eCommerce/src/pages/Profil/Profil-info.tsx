@@ -23,7 +23,7 @@ export default function ProfilInfo() {
 
   return (
     <Page className="w-full h-full flex justify-center">
-      <div className="max-w-5xl w-full pt-20 flex flex-wrap justify-between">
+      <div className="max-w-5xl w-full pt-20 flex flex-wrap justify-between sm:gap-14">
         {isAddAddress && (
           <EditProfilModal
             modalName="Add address"
@@ -41,7 +41,7 @@ export default function ProfilInfo() {
             email={userData?.email}
           />
         </div>
-        <div className="flex flex-col items-start ">
+        <div className="flex flex-col items-start sm:pl-4 ">
           <div className="flex items-center gap-5">
             <p className="text-xl font-bold text-teal-400">Adresses</p>
             <EditButton icon={faPlus} onClick={addAddress} size="lg" />

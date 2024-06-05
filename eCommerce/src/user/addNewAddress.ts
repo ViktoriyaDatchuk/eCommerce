@@ -5,6 +5,7 @@ import {
   CustomerSetDefaultBillingAddressAction,
   CustomerSetDefaultShippingAddressAction,
 } from '@commercetools/platform-sdk';
+import swal from 'sweetalert';
 import { AddOrEditAddress } from '../interfaces/address.interface';
 import { getCurrentUser } from './getCurrentUser';
 import apiRoot from '../sdk/apiRoot';
@@ -42,7 +43,6 @@ export default async function addNewAddress(data: EditProfileModalData, navigate
     })
     .execute()
     .then(async (response) => {
-      console.log('1111111111111', response);
       const addressId = response.body.addresses.find(
         (addr) => addr.streetName === address.streetName && addr.country === address.country
       )?.id;
@@ -93,11 +93,23 @@ export default async function addNewAddress(data: EditProfileModalData, navigate
             actions: updateActions,
           },
         })
-        .execute();
-      navigate('/');
-      setTimeout(() => {
-        navigate('/profil-info');
-      }, 0);
+        .execute()
+        .then(() => {
+          swal({
+            icon: 'success',
+            text: 'Success',
+          });
+          navigate('/');
+          setTimeout(() => {
+            navigate('/profil-info');
+          }, 0);
+        })
+        .catch((error: Error) => {
+          swal({
+            icon: 'error',
+            text: error.message,
+          });
+        });
     });
   return null;
 }
