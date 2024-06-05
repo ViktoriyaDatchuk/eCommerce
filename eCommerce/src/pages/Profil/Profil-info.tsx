@@ -70,6 +70,8 @@ export default function ProfilInfo() {
                     shippingAddress={isShippingAddress}
                     defaultBilling={isBillingDefault}
                     defaultShipping={isShippingDefault}
+                    userId={userData.id}
+                    version={userData.version}
                   />
                 );
               })}

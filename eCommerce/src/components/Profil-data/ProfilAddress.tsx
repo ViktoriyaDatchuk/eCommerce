@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+
 import EditButton from '../EditButton';
 import ProfilModal from '../../pages/Profil/ProfilModal';
+import deleteAddress from '../../user/deleteAddress';
 
 interface AddressInfo {
   id: string;
@@ -13,6 +16,8 @@ interface AddressInfo {
   billingAddress: boolean | undefined;
   defaultBilling: boolean;
   defaultShipping: boolean;
+  userId: string;
+  version: number;
 }
 
 export default function ProfilAdress({
@@ -25,6 +30,8 @@ export default function ProfilAdress({
   billingAddress,
   defaultBilling,
   defaultShipping,
+  userId,
+  version,
 }: AddressInfo) {
   const style = 'mb-2 flex gap-5 text-xl text-teal-400';
 
@@ -33,9 +40,10 @@ export default function ProfilAdress({
   const editCurrentAddress = () => {
     setIsEditAddress(true);
   };
+  const navigate = useNavigate();
 
   const deleteCurrentAddress = (addressId: string) => {
-    console.log(addressId);
+    deleteAddress(userId, addressId, version, navigate);
   };
 
   return (
