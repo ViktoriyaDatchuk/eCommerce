@@ -20,6 +20,8 @@ export interface IFormInput {
   isShipping?: boolean;
   isBillingDefault?: boolean;
   isShippingDefault?: boolean;
+  currentPassword: string;
+  newPassword: string;
 }
 
 /* eslint-disable no-shadow */

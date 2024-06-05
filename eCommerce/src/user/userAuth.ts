@@ -9,6 +9,7 @@ const saveUserToLocalStorage = (response: ClientResponse, navigate: (path: strin
     id: response.body.customer.id,
     firstName: response.body.customer.firstName,
     lastName: response.body.customer.lastName,
+    version: response.body.customer.version,
   };
   localStorage.setItem('commercetools_user', JSON.stringify(user));
   navigate('/');

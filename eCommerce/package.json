@@ -36,6 +36,7 @@
     "react-modal": "^3.16.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.23.1",
+    "sweetalert": "^2.1.2",
     "swiper": "^11.1.4"
   },
   "devDependencies": {

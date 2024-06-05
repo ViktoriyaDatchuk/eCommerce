@@ -5,6 +5,7 @@ import LoadingModal from '../../components/LoadingModal';
 
 import AddAddress from './Modals/AddAddress';
 import EditProfileData from './Modals/EditProfileData';
+import EditPasswordModal from './Modals/EditPasswordModal';
 
 interface EditProfilModalProps {
   modalName: string;
@@ -13,6 +14,7 @@ interface EditProfilModalProps {
   editData?: boolean;
   editAddress?: boolean;
   addAddress?: boolean;
+  editPassword?: boolean;
   shipping?: boolean;
   billing?: boolean;
   billingDefault?: boolean;
@@ -26,6 +28,7 @@ export default function ProfilModal({
   editData,
   editAddress,
   addAddress,
+  editPassword,
   shipping,
   billing,
   billingDefault,
@@ -57,6 +60,7 @@ export default function ProfilModal({
           edit
         />
       )}
+      {editPassword && <EditPasswordModal modalName={modalName} setIsEditPassword={setIsOpenModal} />}
     </Modal>
   );
 }

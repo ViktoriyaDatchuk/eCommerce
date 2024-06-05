@@ -6,9 +6,22 @@ export type EditProfileModalData = Partial<IFormInput>;
 
 interface InputModalProps {
   type: string;
-  title: 'email' | 'password' | 'firstName' | 'lastName' | 'birthDate' | 'country' | 'city' | 'street' | 'postCode';
+  title:
+    | 'email'
+    | 'password'
+    | 'firstName'
+    | 'lastName'
+    | 'birthDate'
+    | 'country'
+    | 'city'
+    | 'street'
+    | 'postCode'
+    | 'currentPassword'
+    | 'newPassword';
   value?: string;
   register: UseFormRegister<EditProfileModalData>;
+  currentPassword?: boolean;
+  newPassword?: boolean;
 }
 
 export default function InputModal({ register, type, title, value = '' }: InputModalProps) {
@@ -26,6 +39,10 @@ export default function InputModal({ register, type, title, value = '' }: InputM
         return 'last name';
       case 'birthDate':
         return 'date of birth';
+      case 'currentPassword':
+        return 'current password';
+      case 'newPassword':
+        return 'new password';
       default:
         return inputTitle;
     }
@@ -47,7 +64,7 @@ export default function InputModal({ register, type, title, value = '' }: InputM
         className="px-1 rounded-sm"
         type={type}
         id={newTitle}
-        placeholder={`Enter new ${newTitle}`}
+        placeholder={`Enter ${newTitle}`}
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
       />

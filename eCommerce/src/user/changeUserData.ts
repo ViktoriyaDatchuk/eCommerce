@@ -1,4 +1,5 @@
 import { Customer, CustomerUpdate } from '@commercetools/platform-sdk';
+import swal from 'sweetalert';
 import apiRoot from '../sdk/apiRoot';
 import { EditProfileModalData } from '../components/InputModal';
 
@@ -38,9 +39,21 @@ export default function changeUserData(
     .post({
       body: updateCustomerData,
     })
-    .execute();
-  navigate('/');
-  setTimeout(() => {
-    navigate('/profil-info');
-  }, 0);
+    .execute()
+    .then(() => {
+      swal({
+        icon: 'success',
+        text: 'Success',
+      });
+      navigate('/');
+      setTimeout(() => {
+        navigate('/profil-info');
+      }, 0);
+    })
+    .catch((error: Error) => {
+      swal({
+        icon: 'error',
+        text: error.message,
+      });
+    });
 }

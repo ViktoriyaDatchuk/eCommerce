@@ -13,3 +13,38 @@ body {
   gap: 1rem;
   text-align: center;
 }
+
+.swal-icon--success__ring {
+  border-color: #fb923c;
+}
+.swal-icon--success__line {
+  background-color: #fb923c;
+}
+
+.swal-icon--success__hide-corners {
+  background-color: #111827;
+}
+
+.swal-modal {
+  background-color: #111827;
+  width: 50%;
+}
+.swal-modal ::before {
+  background-color: #111827;
+}
+.swal-modal ::after {
+  background-color: #111827;
+}
+
+.swal-button--confirm {
+  color: black;
+  font-weight: 800;
+  background-color: rgb(45 212 191);
+}
+
+.swal-icon--error + .swal-text {
+  color: #f27474;
+}
+.swal-icon--success + .swal-text {
+  color: #fb923c;
+}
