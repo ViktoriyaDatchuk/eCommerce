@@ -42,6 +42,9 @@ export default function ProfilModal({
     return <LoadingModal />;
   }
 
+  const currentAddress = userData.addresses.find((address) => address.id === addressID);
+  if (!currentAddress) return null;
+
   return (
     <Modal
       className="max-w-80 w-full p-5 bg-gray-900 inset-x-0 rounded-md outline-none"
@@ -61,6 +64,10 @@ export default function ProfilModal({
           shippingDefault={shippingDefault}
           edit
           addressID={addressID}
+          country={currentAddress.country}
+          city={currentAddress.city}
+          postalCode={currentAddress.postalCode}
+          street={currentAddress.streetName}
         />
       )}
       {editPassword && <EditPasswordModal modalName={modalName} setIsEditPassword={setIsOpenModal} />}
