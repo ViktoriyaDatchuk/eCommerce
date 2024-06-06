@@ -62,10 +62,12 @@ export default async function editAddress(
       )[] = [];
 
       if (isBilling && addressId) {
-        updateActions.push({
-          action: 'removeShippingAddressId',
-          addressId,
-        });
+        if (isShipping) {
+          updateActions.push({
+            action: 'removeShippingAddressId',
+            addressId,
+          });
+        }
         updateActions.push({
           action: 'addBillingAddressId',
           addressId,
@@ -73,10 +75,12 @@ export default async function editAddress(
       }
 
       if (isShipping && addressId) {
-        updateActions.push({
-          action: 'removeBillingAddressId',
-          addressId,
-        });
+        if (isBilling) {
+          updateActions.push({
+            action: 'removeBillingAddressId',
+            addressId,
+          });
+        }
         updateActions.push({
           action: 'addShippingAddressId',
           addressId,
