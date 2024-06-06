@@ -19,6 +19,7 @@ interface EditProfilModalProps {
   billing?: boolean;
   billingDefault?: boolean;
   shippingDefault?: boolean;
+  addressID?: string;
 }
 
 export default function ProfilModal({
@@ -33,6 +34,7 @@ export default function ProfilModal({
   billing,
   billingDefault,
   shippingDefault,
+  addressID,
 }: EditProfilModalProps) {
   const userData = useCurrentUser();
 
@@ -58,6 +60,7 @@ export default function ProfilModal({
           billingDefault={billingDefault}
           shippingDefault={shippingDefault}
           edit
+          addressID={addressID}
         />
       )}
       {editPassword && <EditPasswordModal modalName={modalName} setIsEditPassword={setIsOpenModal} />}

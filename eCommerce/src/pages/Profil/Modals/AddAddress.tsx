@@ -8,6 +8,7 @@ import CountryListModal from '../../../components/CountryListModal';
 import InputModal, { EditProfileModalData } from '../../../components/InputModal';
 import { IFormInput } from '../../SignUp';
 import addNewAddress from '../../../user/addNewAddress';
+import editAddress from '../../../user/editAddress';
 
 interface AddAddressProps {
   modalName: string;
@@ -21,6 +22,7 @@ interface AddAddressProps {
   postalCode?: string;
   street?: string;
   edit?: boolean;
+  addressID?: string;
 }
 
 export default function AddAddress({
@@ -35,6 +37,7 @@ export default function AddAddress({
   postalCode,
   street,
   edit,
+  addressID,
 }: AddAddressProps) {
   const [isBillingChecked, setIsBillingChecked] = useState(billing);
   const [isShippingChecked, setIsShippingChecked] = useState(shipping);
@@ -94,11 +97,12 @@ export default function AddAddress({
 
   const navigate = useNavigate();
   const onSubmit = (data: EditProfileModalData) => {
+    console.log(addressID);
     if (!edit) {
       addNewAddress(data, navigate);
       setIsOpenModal(false);
-    } else {
-      console.log(data);
+    } else if (addressID) {
+      editAddress(data, addressID, navigate);
     }
   };
   return (

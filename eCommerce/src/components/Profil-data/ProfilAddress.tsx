@@ -58,6 +58,7 @@ export default function ProfilAdress({
           billingDefault={defaultBilling}
           shippingDefault={defaultShipping}
           editAddress
+          addressID={id}
         />
       )}
       {shippingAddress && (
