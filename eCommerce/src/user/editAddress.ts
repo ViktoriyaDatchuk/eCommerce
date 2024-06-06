@@ -2,17 +2,23 @@ import {
   Address,
   CustomerAddBillingAddressIdAction,
   CustomerAddShippingAddressIdAction,
+  CustomerRemoveBillingAddressIdAction,
+  CustomerRemoveShippingAddressIdAction,
   CustomerSetDefaultBillingAddressAction,
   CustomerSetDefaultShippingAddressAction,
 } from '@commercetools/platform-sdk';
-import swal from 'sweetalert';
 
+import swal from 'sweetalert';
 import { AddOrEditAddress } from '../interfaces/address.interface';
 import { getCurrentUser } from './getCurrentUser';
 import apiRoot from '../sdk/apiRoot';
 import { EditProfileModalData } from '../components/InputModal';
 
-export default async function addNewAddress(data: EditProfileModalData, navigate: (path: string) => void) {
+export default async function editAddress(
+  data: EditProfileModalData,
+  addressId: string,
+  navigate: (path: string) => void
+) {
   const userData = await getCurrentUser();
 
   if (!userData) return null;
@@ -27,6 +33,7 @@ export default async function addNewAddress(data: EditProfileModalData, navigate
     postalCode: postCode,
     city,
   };
+  console.log(address);
 
   apiRoot
     .customers()
@@ -36,26 +43,29 @@ export default async function addNewAddress(data: EditProfileModalData, navigate
         version,
         actions: [
           {
-            action: 'addAddress',
+            action: 'changeAddress',
+            addressId,
             address,
           },
         ],
       },
     })
     .execute()
-    .then(async (response) => {
-      const addressId = response.body.addresses.find(
-        (addr) => addr.streetName === address.streetName && addr.country === address.country
-      )?.id;
-
+    .then((response) => {
       const updateActions: (
         | CustomerSetDefaultBillingAddressAction
         | CustomerSetDefaultShippingAddressAction
         | CustomerAddBillingAddressIdAction
         | CustomerAddShippingAddressIdAction
+        | CustomerRemoveShippingAddressIdAction
+        | CustomerRemoveBillingAddressIdAction
       )[] = [];
-      // const updateActions: (CustomerSetDefaultBillingAddressAction | CustomerSetDefaultShippingAddressAction)[] = [];
+
       if (isBilling && addressId) {
+        updateActions.push({
+          action: 'removeShippingAddressId',
+          addressId,
+        });
         updateActions.push({
           action: 'addBillingAddressId',
           addressId,
@@ -63,6 +73,10 @@ export default async function addNewAddress(data: EditProfileModalData, navigate
       }
 
       if (isShipping && addressId) {
+        updateActions.push({
+          action: 'removeBillingAddressId',
+          addressId,
+        });
         updateActions.push({
           action: 'addShippingAddressId',
           addressId,
