@@ -16,6 +16,12 @@ export interface IFormInput {
   city: string;
   street: string;
   postCode: string;
+  isBilling?: boolean;
+  isShipping?: boolean;
+  isBillingDefault?: boolean;
+  isShippingDefault?: boolean;
+  currentPassword: string;
+  newPassword: string;
 }
 
 /* eslint-disable no-shadow */

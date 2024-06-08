@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../../Button';
+import useCurrentUser from '../../../user/getCurrentUser';
+import LoadingModal from '../../LoadingModal';
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -9,14 +11,22 @@ export default function LogIn() {
     navigate('/');
   };
 
-  const userString = localStorage.getItem('commercetools_user');
-  const user = userString ? JSON.parse(userString) : null;
+  const user = useCurrentUser();
+
+  if (!user) return <LoadingModal />;
 
   return (
     <>
-      <div className="flex items-center gap-1 text-white hover:cursor-pointer">
-        <p>{user.firstName}</p>
-        <p>{user.lastName}</p>
+      <div>
+        <img src="/disc.png" alt="disc" />
+      </div>
+      <div className="min-w-20">
+        <Button
+          text={`${user.firstName} ${user.lastName}`}
+          isPrimary={false}
+          onClick={() => navigate('/profil-info')}
+          addClass="bg-transparent text-orange-400 font-normal hover:bg-transparent hover:underline"
+        />
       </div>
       <Button text="sign out" isPrimary onClick={logout} />
     </>

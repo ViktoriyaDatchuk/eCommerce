@@ -10,6 +10,20 @@ export interface FormSignIn {
   password: string;
 }
 
+/* eslint-disable no-shadow */
+enum ErrorMessages {
+  RequiredEmail = 'Email is required',
+  FormatEmail = 'Invalid email',
+  RequiredPassword = 'Password is required',
+  FormatPassword = 'Invalid password',
+  UppercasePassword = 'Password must include at least one uppercase letter',
+  LowercasePassword = 'Password must include at least one lowercase letter',
+  DigitPassword = 'Password must include at least one digit',
+  LengthPassword = 'Password must have at least 8 characters',
+  SignInEmail = 'User with this email is not registered',
+  SignInPassword = 'Incorrect password',
+}
+
 export default function SignInForm() {
   const {
     register,
@@ -45,11 +59,11 @@ export default function SignInForm() {
         Email
         <input
           {...register('email', {
-            required: 'Email is required',
+            required: ErrorMessages.RequiredEmail,
             pattern: {
               value:
                 /^(\S([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu,
-              message: 'Invalid email',
+              message: ErrorMessages.FormatEmail,
             },
             onChange: () => {
               setEmailError(false);
@@ -59,30 +73,30 @@ export default function SignInForm() {
           className={errors.email || emailError ? inputErrorStyle : inputValidStyle}
         />
         {errors.email && <div className={errorStyle}>{errors.email.message}</div>}
-        {emailError && <div className={errorStyle}>User with this email is not registered</div>}
+        {emailError && <div className={errorStyle}>{ErrorMessages.SignInEmail}</div>}
       </label>
 
       <label htmlFor="password" className={labelStyle}>
         Password
         <input
           {...register('password', {
-            required: 'Password is required',
+            required: ErrorMessages.RequiredPassword,
             validate: (value) => {
               if (value.match(/\s/)) {
-                return 'Invalid password';
+                return ErrorMessages.FormatPassword;
               } else if (!value.match(/[A-Z]/)) {
-                return 'Password must include at least one uppercase letter';
+                return ErrorMessages.UppercasePassword;
               } else if (!value.match(/[a-z]/)) {
-                return 'Password must include at least one lowercase letter';
+                return ErrorMessages.LowercasePassword;
               } else if (!value.match(/\d/)) {
-                return 'Password must include at least one digit';
+                return ErrorMessages.DigitPassword;
               } else {
                 return true;
               }
             },
             minLength: {
               value: 8,
-              message: 'Password must have at least 8 characters',
+              message: ErrorMessages.LengthPassword,
             },
             onChange: () => {
               setPasswordError(false);
@@ -97,7 +111,7 @@ export default function SignInForm() {
           onKeyDown={() => setVisible(!visible)}
         />
         {errors.password && <div className={errorStyle}>{errors.password.message}</div>}
-        {passwordError && <div className={errorStyle}>Incorrect password</div>}
+        {passwordError && <div className={errorStyle}>{ErrorMessages.SignInPassword}</div>}
       </label>
       <div className="flex gap-3.5 mt-16 mx-auto">
         <Button

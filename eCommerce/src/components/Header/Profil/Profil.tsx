@@ -2,12 +2,12 @@ import LogIn from './LogIn';
 import LogOut from './LogOut';
 
 export default function Profil() {
-  const userName = localStorage.getItem('commercetools_user');
+  const userData = localStorage.getItem('commercetools_user');
 
   return (
-    <div className="max-w-96 w-full flex justify-end gap-5">
-      {userName && <LogIn />}
-      {!userName && <LogOut />}
+    <div className="flex justify-end items-center gap-5">
+      {userData && <LogIn />}
+      {!userData && <LogOut />}
     </div>
   );
 }
