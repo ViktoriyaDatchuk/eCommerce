@@ -30,6 +30,7 @@ export default function Collection() {
           .flat()
           .map((movie) => (
             <Product
+              filmId={movie.id}
               key={movie.id}
               filmKey={movie.key!}
               imgSrc={movie.masterData.current.masterVariant.images![0].url}
