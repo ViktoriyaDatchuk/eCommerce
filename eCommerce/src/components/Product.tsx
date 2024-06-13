@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+
 import Button from './Button';
 import useCurrentUser from '../user/getCurrentUser';
+import findCustomerCart from '../utils/findCustomerCart';
+import addToCart from '../user/addToCart';
+import removeFromCart from '../user/removeFromCat';
+
+// import createOrGetCart from '../user/createCart';
 // import apiRoot from '../sdk/apiRoot';
 
 interface CardProps {
@@ -12,6 +18,7 @@ interface CardProps {
   genre: string;
   price: number;
   discountPrice: number;
+  variantId: number;
 }
 
 const cardStyle = 'w-80 rounded-md bg-slate-400/10 pb-3 hover:shadow-md hover:shadow-teal-400 hover:cursor-pointer';
@@ -22,13 +29,34 @@ const priceContainerStyle = 'flex flex-col items-center gap-2 mt-4';
 const priceStyle = 'text-decoration-line: line-through text-orange-400 mr-5';
 const discountPriceStyle = 'text-red-500 mr-5';
 
-export default function Product({ filmId, filmKey, imgSrc, productName, genre, price, discountPrice }: CardProps) {
+export default function Product({
+  filmId,
+  filmKey,
+  imgSrc,
+  productName,
+  genre,
+  price,
+  discountPrice,
+  variantId,
+}: CardProps) {
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(false);
   const user = useCurrentUser();
   if (!user) return null;
-  const addToCard = () => {
+
+  const addToCard = async () => {
+    console.log(isAddMovieToCard);
     setIsAddMovieToCard(!isAddMovieToCard);
-    console.log(user, filmId);
+    console.log(isAddMovieToCard);
+    const customerCart = await findCustomerCart(user);
+    if (customerCart) {
+      console.log(customerCart);
+      console.log(isAddMovieToCard);
+      if (isAddMovieToCard) {
+        addToCart(customerCart, filmId, variantId);
+      } else {
+        removeFromCart(customerCart, filmId);
+      }
+    }
     // apiRoot
     //   .customers()
     //   .get()
@@ -42,12 +70,7 @@ export default function Product({ filmId, filmKey, imgSrc, productName, genre, p
     //   .then((resp) => console.log(resp.body.total));
 
     // get card
-    // apiRoot
-    //   .carts()
-    //   .get()
-    //   .execute()
-    //   .then((response) => console.log('!212121!', response.body.results));
-
+    // createOrGetCart(user);
     // createCard;
     // apiRoot
     //   .carts()

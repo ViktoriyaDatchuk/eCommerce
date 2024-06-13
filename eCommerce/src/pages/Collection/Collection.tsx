@@ -38,6 +38,7 @@ export default function Collection() {
               genre={movie.masterData.current.masterVariant.attributes![4].value}
               price={movie.masterData.current.masterVariant.prices![0].value.centAmount / 100}
               discountPrice={movie.masterData.current.masterVariant.prices![0].discounted!.value.centAmount / 100}
+              variantId={movie.masterData.current.masterVariant.id}
             />
           ))}
         {isFetching && <div className="text-white">loading...</div>}
