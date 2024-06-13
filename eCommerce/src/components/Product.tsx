@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Button from './Button';
 import useCurrentUser from '../user/getCurrentUser';
+// import apiRoot from '../sdk/apiRoot';
 
 interface CardProps {
   filmId: string;
@@ -24,9 +25,51 @@ const discountPriceStyle = 'text-red-500 mr-5';
 export default function Product({ filmId, filmKey, imgSrc, productName, genre, price, discountPrice }: CardProps) {
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(false);
   const user = useCurrentUser();
-  const addToCart = () => {
+  if (!user) return null;
+  const addToCard = () => {
     setIsAddMovieToCard(!isAddMovieToCard);
     console.log(user, filmId);
+    // apiRoot
+    //   .customers()
+    //   .get()
+    //   .execute()
+    //   .then((resp) => console.log(resp.body.total));
+    // total
+    // apiRoot
+    //   .carts()
+    //   .get()
+    //   .execute()
+    //   .then((resp) => console.log(resp.body.total));
+
+    // get card
+    // apiRoot
+    //   .carts()
+    //   .get()
+    //   .execute()
+    //   .then((response) => console.log('!212121!', response.body.results));
+
+    // createCard;
+    // apiRoot
+    //   .carts()
+    //   .post({
+    //     body: {
+    //       customerId: user?.id,
+    //       currency: 'EUR',
+    //     },
+    //   })
+    //   .execute()
+    //   .then((response) => {
+    //     // 3. Handle the response
+    //     const createdCart = response.body;
+    //     const cartId = createdCart.id;
+
+    //     // Now you have the cart ID!
+    //     console.log('Created cart with ID:', cartId);
+    //   })
+    //   .catch((error) => {
+    //     // Handle any errors during cart creation
+    //     console.error('Error creating cart:', error);
+    //   });
   };
 
   return (
@@ -53,7 +96,7 @@ export default function Product({ filmId, filmKey, imgSrc, productName, genre, p
         <Button
           text={!isAddMovieToCard ? 'Add to cart' : 'Remove movie'}
           isPrimary={false}
-          onClick={addToCart}
+          onClick={addToCard}
           addClass={`max-w-40 w-full  ${isAddMovieToCard ? 'bg-pink-600' : 'bg-orange-600'}`}
         />
       </div>
