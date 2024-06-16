@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../Button';
 import useCurrentUser from '../../../user/getCurrentUser';
 import LoadingModal from '../../LoadingModal';
+import CartLogo from '../CartLogo';
 
 export default function LogIn() {
   const navigate = useNavigate();
@@ -17,9 +18,7 @@ export default function LogIn() {
 
   return (
     <>
-      <div>
-        <img src="/disc.png" alt="disc" />
-      </div>
+      <CartLogo onClick={() => navigate('/cart')} />
       <div className="min-w-20">
         <Button
           text={`${user.firstName} ${user.lastName}`}

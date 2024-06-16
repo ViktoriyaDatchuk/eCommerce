@@ -75,7 +75,7 @@ const ctpClient = new ClientBuilder()
   .withProjectKey(projectKey)
   .withClientCredentialsFlow(authMiddlewareOptions)
   .withHttpMiddleware(httpMiddlewareOptions)
-  .withLoggerMiddleware()
+  // .withLoggerMiddleware()
   .build();
 
 export default ctpClient;
