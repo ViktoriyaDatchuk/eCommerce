@@ -1,19 +1,18 @@
-import { Cart } from '@commercetools/platform-sdk';
+import { ConcurrentModificationError } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default function removeFromCart(cart: Cart, productId: string) {
-  const currentMovie = cart.lineItems.find((movie) => movie.productId === productId);
-  if (!currentMovie) return;
+export default async function removeFromCart(lineItemId: string, cartId: string) {
+  const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
   apiRoot
     .carts()
-    .withId({ ID: cart.id })
+    .withId({ ID: cartId })
     .post({
       body: {
-        version: cart.version,
+        version: cartResponse.body.version,
         actions: [
           {
             action: 'removeLineItem',
-            lineItemId: currentMovie.id,
+            lineItemId,
           },
         ],
       },
@@ -21,5 +20,8 @@ export default function removeFromCart(cart: Cart, productId: string) {
     .execute()
     .then((response) => {
       console.log('Product removed from cart:', response.body);
+    })
+    .catch((error: ConcurrentModificationError) => {
+      console.log('409!!!!!!!!!!!!!!!!!!', error.code);
     });
 }

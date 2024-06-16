@@ -1,3 +1,24 @@
+import { Customer } from '@commercetools/platform-sdk';
+import apiRoot from '../sdk/apiRoot';
+
+export default async function createCard(user: Customer) {
+  apiRoot
+    .carts()
+    .post({
+      body: {
+        customerId: user?.id,
+        currency: 'EUR',
+      },
+    })
+    .execute()
+    .then((response) => {
+      const createdCart = response.body;
+      const cartId = createdCart.id;
+      console.log('Created cart with ID:', cartId);
+      return createdCart;
+    });
+}
+
 // import { Customer } from '@commercetools/platform-sdk';
 // import apiRoot from '../sdk/apiRoot';
 
@@ -33,20 +54,4 @@
 
 //   );
 
-//   apiRoot
-//     .carts()
-//     .post({
-//       body: {
-//         customerId: user?.id,
-//         currency: 'EUR',
-//       },
-//     })
-//     .execute()
-//     .then((response) => {
-//       const createdCart = response.body;
-//       const cartId = createdCart.id;
-//       return console.log('Created cart with ID:', cartId);
-//     })
-//     .catch((error) => {
-//       console.error('Error creating cart:', error);
-//     });
+//

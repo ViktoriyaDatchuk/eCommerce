@@ -3,9 +3,11 @@ import { useState } from 'react';
 
 import Button from './Button';
 import useCurrentUser from '../user/getCurrentUser';
-import findCustomerCart from '../utils/findCustomerCart';
-import addToCart from '../user/addToCart';
-import removeFromCart from '../user/removeFromCat';
+// import findCustomerCart from '../utils/findCustomerCart';
+
+import createCard from '../utils/createCart';
+import updateCart from '../utils/updateCart';
+import apiRoot from '../sdk/apiRoot';
 
 // import createOrGetCart from '../user/createCart';
 // import apiRoot from '../sdk/apiRoot';
@@ -41,58 +43,33 @@ export default function Product({
 }: CardProps) {
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(false);
   const user = useCurrentUser();
-  if (!user) return null;
-
   const addToCard = async () => {
-    console.log(isAddMovieToCard);
-    setIsAddMovieToCard(!isAddMovieToCard);
-    console.log(isAddMovieToCard);
-    const customerCart = await findCustomerCart(user);
-    if (customerCart) {
-      console.log(customerCart);
-      console.log(isAddMovieToCard);
-      if (isAddMovieToCard) {
-        addToCart(customerCart, filmId, variantId);
+    if (user) {
+      // const customerCart = await findCustomerCart(user.id);
+      // const [cart] = customerCart;
+      let responseCustomerCart = await apiRoot.carts().withCustomerId({ customerId: user.id }).get().execute();
+      let customerCart = responseCustomerCart.body;
+      console.log(customerCart.version);
+      if (!customerCart) {
+        await createCard(user);
       } else {
-        removeFromCart(customerCart, filmId);
+        console.log('cart alredy exist');
+
+        const pickedFilm = customerCart.lineItems.find((film) => film.productId === filmId);
+
+        if (pickedFilm) {
+          responseCustomerCart = await updateCart(customerCart.id, pickedFilm.id, variantId, 'remove');
+          customerCart = responseCustomerCart.body;
+        } else {
+          responseCustomerCart = await updateCart(customerCart.id, filmId, variantId, 'add');
+          customerCart = responseCustomerCart.body;
+        }
+
+        console.log(customerCart, 'PRODUCT');
       }
     }
-    // apiRoot
-    //   .customers()
-    //   .get()
-    //   .execute()
-    //   .then((resp) => console.log(resp.body.total));
-    // total
-    // apiRoot
-    //   .carts()
-    //   .get()
-    //   .execute()
-    //   .then((resp) => console.log(resp.body.total));
 
-    // get card
-    // createOrGetCart(user);
-    // createCard;
-    // apiRoot
-    //   .carts()
-    //   .post({
-    //     body: {
-    //       customerId: user?.id,
-    //       currency: 'EUR',
-    //     },
-    //   })
-    //   .execute()
-    //   .then((response) => {
-    //     // 3. Handle the response
-    //     const createdCart = response.body;
-    //     const cartId = createdCart.id;
-
-    //     // Now you have the cart ID!
-    //     console.log('Created cart with ID:', cartId);
-    //   })
-    //   .catch((error) => {
-    //     // Handle any errors during cart creation
-    //     console.error('Error creating cart:', error);
-    //   });
+    setIsAddMovieToCard(!isAddMovieToCard);
   };
 
   return (

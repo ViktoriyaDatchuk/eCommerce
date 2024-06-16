@@ -1,33 +1,36 @@
-import { Cart, LineItemDraft } from '@commercetools/platform-sdk';
+import { LineItemDraft } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default function addToCart(cart: Cart, productId: string, variantId: number, quantity: number = 1) {
-  const currentMovie = cart.lineItems.find((movie) => movie.productId === productId);
+export default async function addToCart(
+  cartId: string,
+  version: number,
+  productId: string,
+  variantId: number,
+  quantity: number = 1
+) {
+  const lineItemDraft: LineItemDraft = {
+    productId,
+    variantId,
+    quantity,
+  };
+  console.log(version, 'version!');
 
-  if (!currentMovie) {
-    const lineItemDraft: LineItemDraft = {
-      productId,
-      variantId,
-      quantity,
-    };
+  const response = apiRoot
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version,
+        actions: [
+          {
+            action: 'addLineItem',
+            ...lineItemDraft,
+          },
+        ],
+      },
+    })
+    .execute();
+  console.log('film added');
 
-    apiRoot
-      .carts()
-      .withId({ ID: cart.id })
-      .post({
-        body: {
-          version: cart.version,
-          actions: [
-            {
-              action: 'addLineItem',
-              ...lineItemDraft,
-            },
-          ],
-        },
-      })
-      .execute()
-      .then((response) => {
-        console.log('Product added to cart:', response.body);
-      });
-  }
+  return response;
 }
