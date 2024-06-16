@@ -10,6 +10,7 @@ import Page404 from './pages/Page404';
 import ProfilInfo from './pages/Profil/Profil-info';
 import Movie from './pages/Movie';
 import './App.css';
+import Cart from './pages/Cart/Cart';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profil-info" element={<ProfilInfo />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Router>
