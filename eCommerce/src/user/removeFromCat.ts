@@ -1,14 +1,12 @@
-import { ConcurrentModificationError } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default async function removeFromCart(lineItemId: string, cartId: string) {
-  const cartResponse = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-  apiRoot
+export default async function removeFromCart(lineItemId: string, cartID: string, version: number) {
+  const remove = await apiRoot
     .carts()
-    .withId({ ID: cartId })
+    .withId({ ID: cartID })
     .post({
       body: {
-        version: cartResponse.body.version,
+        version,
         actions: [
           {
             action: 'removeLineItem',
@@ -17,11 +15,6 @@ export default async function removeFromCart(lineItemId: string, cartId: string)
         ],
       },
     })
-    .execute()
-    .then((response) => {
-      console.log('Product removed from cart:', response.body);
-    })
-    .catch((error: ConcurrentModificationError) => {
-      console.log('409!!!!!!!!!!!!!!!!!!', error.code);
-    });
+    .execute();
+  console.log('Product removed from cart:', remove.body.version);
 }

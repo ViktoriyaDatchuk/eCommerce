@@ -2,12 +2,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 import Button from './Button';
-import useCurrentUser from '../user/getCurrentUser';
-// import findCustomerCart from '../utils/findCustomerCart';
-
-import createCard from '../utils/createCart';
 import updateCart from '../utils/updateCart';
+import { UserDataLocalStorage } from '../interfaces/userData.interface';
+import createCard from '../utils/createCart';
+import AddMovieModal from '../pages/Collection/MovieModal';
 import apiRoot from '../sdk/apiRoot';
+
+// import findCustomerCart from '../utils/findCustomerCart';
 
 // import createOrGetCart from '../user/createCart';
 // import apiRoot from '../sdk/apiRoot';
@@ -42,38 +43,41 @@ export default function Product({
   variantId,
 }: CardProps) {
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(false);
-  const user = useCurrentUser();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const userRequest = localStorage.getItem('commercetools_user');
+  const cartID = localStorage.getItem('cartID');
+
   const addToCard = async () => {
-    if (user) {
-      // const customerCart = await findCustomerCart(user.id);
-      // const [cart] = customerCart;
-      let responseCustomerCart = await apiRoot.carts().withCustomerId({ customerId: user.id }).get().execute();
-      let customerCart = responseCustomerCart.body;
-      console.log(customerCart.version);
-      if (!customerCart) {
-        await createCard(user);
+    setIsOpen(true);
+
+    if (userRequest) {
+      setIsAddMovieToCard((prevState) => !prevState);
+      if (!cartID) {
+        if (!userRequest) return;
+
+        const user: UserDataLocalStorage = JSON.parse(userRequest);
+        await createCard(user.id);
       } else {
-        console.log('cart alredy exist');
+        const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
+        const { version, id, lineItems } = currentCart.body;
 
-        const pickedFilm = customerCart.lineItems.find((film) => film.productId === filmId);
+        const picked = lineItems.find((film) => film.productId === filmId);
 
-        if (pickedFilm) {
-          responseCustomerCart = await updateCart(customerCart.id, pickedFilm.id, variantId, 'remove');
-          customerCart = responseCustomerCart.body;
+        if (picked) {
+          await updateCart(picked.id, variantId, 'remove', id, version);
         } else {
-          responseCustomerCart = await updateCart(customerCart.id, filmId, variantId, 'add');
-          customerCart = responseCustomerCart.body;
+          await updateCart(filmId, variantId, 'add', id, version);
         }
-
-        console.log(customerCart, 'PRODUCT');
       }
     }
 
-    setIsAddMovieToCard(!isAddMovieToCard);
+    // updateCart(filmId, variantId, 'remove');
   };
 
   return (
     <div className={cardStyle}>
+      {!userRequest && isOpen && <AddMovieModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />}
       <div style={{ height: '480px', marginBottom: '10px' }}>
         <img
           className={imageStyle}
