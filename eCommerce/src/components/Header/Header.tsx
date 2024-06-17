@@ -12,6 +12,9 @@ export default function Header() {
         <Logo onClick={() => navigate('/')} />
         <Button text="find a movie" isPrimary={false} onClick={() => navigate('/movie-collection')} />
       </div>
+      <button type="button" className="text-[#FEA732]" onClick={() => navigate('/about-us')}>
+        About us
+      </button>
       <Profil />
     </header>
   );

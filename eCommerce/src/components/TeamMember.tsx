@@ -14,7 +14,7 @@ export default function TeamMember({ image, name, role, github, description }: T
       <img src={image} alt={image} className={imageStyle} />
       <h4 className={nameStyle}>{name}</h4>
       <p className={roleStyle}>{role}</p>
-      <a href={github} className={githubLinkStyle}>
+      <a href={github} className={githubLinkStyle} target="_blank" rel="noreferrer">
         GitHub
       </a>
       <p className="mt-2 text-sm">{description}</p>
