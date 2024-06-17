@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { LineItem } from '@commercetools/platform-sdk';
+import { Link } from 'react-router-dom';
 import CartItem from '../../components/CartItem';
 import Page from '../../components/Page';
 import apiRoot from '../../sdk/apiRoot';
 import useCurrentUser from '../../user/getCurrentUser';
-import { Link } from 'react-router-dom';
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState<LineItem[]>();
