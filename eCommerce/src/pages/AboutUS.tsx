@@ -26,7 +26,7 @@ export default function AboutUs() {
             />
           ))}
         </div>
-        <a className="self-end mr-2 mb-2" href="https://rs.school/" target="_blank">
+        <a className="self-end mr-2 mb-2" href="https://rs.school/" target="_blank" rel="noreferrer">
           <img className={svgStyle} src="/github.svg" alt="github" />
         </a>
       </div>
