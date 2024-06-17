@@ -9,8 +9,9 @@ import Collection from './pages/Collection/Collection';
 import Page404 from './pages/Page404';
 import ProfilInfo from './pages/Profil/Profil-info';
 import Movie from './pages/Movie';
-import './App.css';
 import Cart from './pages/Cart/Cart';
+import AboutUs from './pages/AboutUS';
+import './App.css';
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profil-info" element={<ProfilInfo />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/about-us" element={<AboutUs />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </Router>
