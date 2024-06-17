@@ -40,7 +40,7 @@ export default function Cart() {
             <p>Your cart is empty</p>
             <p>
               Go to{' '}
-              <Link to={'/movie-collection'} className="underline text-orange-500">
+              <Link to="/movie-collection" className="underline text-orange-500">
                 Catalog page
               </Link>{' '}
               to add any product
