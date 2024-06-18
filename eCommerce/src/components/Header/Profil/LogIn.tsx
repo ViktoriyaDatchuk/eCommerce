@@ -18,6 +18,7 @@ export default function LogIn({ setLineItems }: LogInProps) {
     localStorage.removeItem('commercetools_user');
     localStorage.removeItem('cartID');
     localStorage.removeItem('cartVersion');
+    localStorage.removeItem('lineItems');
 
     navigate('/');
   };
@@ -25,7 +26,7 @@ export default function LogIn({ setLineItems }: LogInProps) {
   const getCart = async () => {
     navigate('/cart');
     const lineItems = await getMoviesFromCart();
-    console.log(lineItems);
+
     if (lineItems && setLineItems) {
       setLineItems(lineItems);
     }
