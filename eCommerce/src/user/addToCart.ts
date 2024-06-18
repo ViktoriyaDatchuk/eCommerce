@@ -30,7 +30,9 @@ export default async function addToCart(
     })
     .execute();
   console.log('film added');
-  console.log(response.body);
+  const { lineItems } = response.body;
+
+  localStorage.setItem('lineItems', JSON.stringify(lineItems));
 
   return response;
 }
