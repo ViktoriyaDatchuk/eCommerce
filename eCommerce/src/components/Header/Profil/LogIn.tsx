@@ -9,6 +9,9 @@ export default function LogIn() {
 
   const logout = () => {
     localStorage.removeItem('commercetools_user');
+    localStorage.removeItem('cartID');
+    localStorage.removeItem('cartVersion');
+
     navigate('/');
   };
 
