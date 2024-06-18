@@ -43,7 +43,6 @@ export default function ProfilModal({
   }
 
   const currentAddress = userData.addresses.find((address) => address.id === addressID);
-  if (!currentAddress) return null;
 
   return (
     <Modal
@@ -64,10 +63,10 @@ export default function ProfilModal({
           shippingDefault={shippingDefault}
           edit
           addressID={addressID}
-          country={currentAddress.country}
-          city={currentAddress.city}
-          postalCode={currentAddress.postalCode}
-          street={currentAddress.streetName}
+          country={currentAddress?.country}
+          city={currentAddress?.city}
+          postalCode={currentAddress?.postalCode}
+          street={currentAddress?.streetName}
         />
       )}
       {editPassword && <EditPasswordModal modalName={modalName} setIsEditPassword={setIsOpenModal} />}

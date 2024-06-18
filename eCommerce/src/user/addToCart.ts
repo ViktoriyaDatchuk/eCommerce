@@ -2,10 +2,10 @@ import { LineItemDraft } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
 export default async function addToCart(
-  cartId: string,
-  version: number,
+  cartID: string,
   productId: string,
   variantId: number,
+  version: number,
   quantity: number = 1
 ) {
   const lineItemDraft: LineItemDraft = {
@@ -13,11 +13,10 @@ export default async function addToCart(
     variantId,
     quantity,
   };
-  console.log(version, 'version!');
 
-  const response = apiRoot
+  const response = await apiRoot
     .carts()
-    .withId({ ID: cartId })
+    .withId({ ID: cartID })
     .post({
       body: {
         version,
@@ -31,6 +30,7 @@ export default async function addToCart(
     })
     .execute();
   console.log('film added');
+  console.log(response.body);
 
   return response;
 }

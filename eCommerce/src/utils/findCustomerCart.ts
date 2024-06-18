@@ -1,7 +1,7 @@
 import { Cart } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default async function findCustomerCart(userIdToFind: string): Promise<Cart[]> {
+export default async function findCustomerCart(userIdToFind: string): Promise<Cart> {
   const limit = 20;
   let offset = 0;
   const allCarts: Cart[] = [];
@@ -16,6 +16,7 @@ export default async function findCustomerCart(userIdToFind: string): Promise<Ca
     response = await apiRoot.carts().get({ queryArgs: { limit, offset } }).execute();
     allCarts.push(...response.body.results);
   }
-
-  return allCarts.filter((cart) => cart.customerId === userIdToFind);
+  const customerCart = allCarts.filter((cart) => cart.customerId === userIdToFind)[0];
+  localStorage.setItem('customerCartId', JSON.stringify(customerCart.id));
+  return customerCart;
 }

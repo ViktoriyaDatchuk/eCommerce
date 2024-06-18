@@ -1,57 +1,14 @@
-import { Customer } from '@commercetools/platform-sdk';
 import apiRoot from '../sdk/apiRoot';
 
-export default async function createCard(user: Customer) {
-  apiRoot
+export default async function createCard(customerId: string) {
+  const newCart = await apiRoot
     .carts()
     .post({
       body: {
-        customerId: user?.id,
+        customerId,
         currency: 'EUR',
       },
     })
-    .execute()
-    .then((response) => {
-      const createdCart = response.body;
-      const cartId = createdCart.id;
-      console.log('Created cart with ID:', cartId);
-      return createdCart;
-    });
+    .execute();
+  localStorage.setItem('cartID', newCart.body.id);
 }
-
-// import { Customer } from '@commercetools/platform-sdk';
-// import apiRoot from '../sdk/apiRoot';
-
-// export default function createOrGetCart(user: Customer) {
-//   apiRoot
-//     .carts()
-//     .get()
-//     .execute()
-//     .then((resp) => {
-//       const customerCart = resp.body;
-//       console.log(customerCart);
-//       // if (!customerCart) {
-
-//       // } else {
-//       //   return customerCart;
-//       // }
-//       return null;
-//     });
-// }
-
-// apiRoot
-//   .carts()
-//   .withCustomerId({ customerId: user.id })
-//   .get()
-//   .execute()
-//   .then(() =>
-//     apiRoot
-//       .carts()
-//       .withCustomerId({ customerId: user.id })
-//       .get()
-//       .execute()
-//       .then((response) => console.log('response cart', response))
-
-//   );
-
-//
