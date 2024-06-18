@@ -1,31 +1,28 @@
-import { useState } from 'react';
 import { LineItem } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 import CartItem from '../../components/CartItem';
 import Page from '../../components/Page';
-import apiRoot from '../../sdk/apiRoot';
-import useCurrentUser from '../../user/getCurrentUser';
 
-export default function Cart() {
-  const [cartItems, setCartItems] = useState<LineItem[]>();
-  const getCart = async () => {
-    const user = useCurrentUser();
-    if (!user) {
-      return;
+interface CartProps {
+  lineItems?: LineItem[];
+  setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
+}
+
+export default function Cart({ lineItems, setLineItems }: CartProps) {
+  useEffect(() => {
+    const savedLineItems = localStorage.getItem('lineItems');
+    if (savedLineItems && setLineItems) {
+      setLineItems(JSON.parse(savedLineItems));
     }
-    const responseCustomerCart = await apiRoot.carts().withCustomerId({ customerId: user.id }).get().execute();
-    if (!responseCustomerCart) {
-      return;
-    }
-    setCartItems(responseCustomerCart.body.lineItems);
-  };
-  getCart();
+  }, [setLineItems]);
+
   return (
-    <Page>
+    <Page setLineItems={setLineItems}>
       <div className="flex flex-col mt-20 gap-10">
-        <h1 className="text-white text-2xl">CART</h1>
-        {cartItems && cartItems.length > 0 ? (
-          cartItems.map((item) => (
+        <h1 className=" text-2xl font-bold text-orange-400">Your movies</h1>
+        {lineItems && lineItems.length > 0 ? (
+          lineItems.map((item) => (
             <CartItem
               key={item.id}
               imgLink={item.variant.images![0].url}
