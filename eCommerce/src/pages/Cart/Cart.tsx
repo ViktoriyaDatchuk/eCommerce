@@ -21,19 +21,23 @@ export default function Cart({ lineItems, setLineItems }: CartProps) {
     }
   }, [setLineItems]);
 
+  const amount = lineItems ? lineItems.length : 0;
+
   return (
-    <Page setLineItems={setLineItems}>
+    <Page amount={amount} setLineItems={setLineItems}>
       <div className="flex flex-col mt-20 gap-10">
         <h1 className=" text-2xl font-bold text-orange-400">Your movies</h1>
         {lineItems && lineItems.length > 0 ? (
           lineItems.map((item) => (
             <CartItem
-              key={item.id}
+              key={item.productId}
+              id={item.id}
               imgLink={item.variant.images![0].url}
               name={item.name['en-US']}
               priceValue={`${item.price.value.centAmount / 100}`}
               discountedPrice={`${item.price.discounted?.value.centAmount ? item.price.discounted.value.centAmount / 100 : 'No discount'}`}
               totalPrice={`${item.totalPrice.centAmount / 100}`}
+              setLineItems={setLineItems}
             />
           ))
         ) : (

@@ -5,10 +5,11 @@ import Logo from './Logo';
 import Profil from './Profil/Profil';
 
 interface HeaderProps {
+  amount?: number;
   setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
 }
 
-export default function Header({ setLineItems }: HeaderProps) {
+export default function Header({ setLineItems, amount }: HeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -20,7 +21,7 @@ export default function Header({ setLineItems }: HeaderProps) {
       <button type="button" className="text-[#FEA732]" onClick={() => navigate('/about-us')}>
         About us
       </button>
-      {setLineItems ? setLineItems && <Profil setLineItems={setLineItems} /> : <Profil />}
+      {setLineItems && amount ? setLineItems && <Profil amount={amount} setLineItems={setLineItems} /> : <Profil />}
     </header>
   );
 }

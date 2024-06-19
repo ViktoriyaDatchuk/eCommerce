@@ -1,18 +1,12 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-import { Cart } from '@commercetools/platform-sdk';
 import Button from './Button';
 import updateCart from '../utils/updateCart';
 import { UserDataLocalStorage } from '../interfaces/userData.interface';
 import createCard from '../utils/createCart';
 import AddMovieModal from '../pages/Collection/MovieModal';
-// import apiRoot from '../sdk/apiRoot';
-
-// import findCustomerCart from '../utils/findCustomerCart';
-
-// import createOrGetCart from '../user/createCart';
-// import apiRoot from '../sdk/apiRoot';
+import apiRoot from '../sdk/apiRoot';
 
 interface CardProps {
   filmId: string;
@@ -47,69 +41,48 @@ export default function Product({
 }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(isPicked || false);
-  // const [isCart, setIsCart] = useState<string | null>(null);
-  const [cart, setCart] = useState<Cart | null>(null);
 
-  // const cartID = localStorage.getItem('cartID');
   const userRequest = localStorage.getItem('commercetools_user');
+
+  const fetchCart = async (cartId: string) => {
+    const currentCart = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+
+    return currentCart.body;
+  };
 
   useEffect(() => {
     if (isPicked !== undefined) setIsAddMovieToCard(isPicked);
-    if (cart) setCart(cart);
-  }, [isPicked, cart]);
-
-  useEffect(() => {
-    console.log('effect', cart);
-    setCart(cart);
-    console.log('afterEffect', cart);
-  }, [cart]);
-  // const fetchCart = async (cartId: string) => {
-  //   const currentCart = await apiRoot.carts().withId({ ID: cartId }).get().execute();
-  //   setCart(currentCart.body);
-  //   return currentCart.body;
-  // };
-  // console.log('cartID', cartID);
+  }, [isPicked]);
 
   const addToCard = async () => {
-    // setIsCart(cartID);
     setIsOpen(true);
+    const cartID = localStorage.getItem('cartID');
 
     if (userRequest) {
       setIsAddMovieToCard((prevState) => !prevState);
-      console.log(cart);
-
-      if (!cart) {
+      console.log('cartID', cartID);
+      if (!cartID) {
         const user: UserDataLocalStorage = JSON.parse(userRequest);
 
         const newCart = await createCard(user.id);
-        // setIsCart(newCart.id);
-        setCart(newCart);
-        console.log('CAAAART NEW', newCart);
-        console.log(cart);
-        if (cart) {
-          console.log('afterEffect3', cart);
-          const { version, id } = cart;
+        const cart = await fetchCart(newCart.id);
+        console.log('cartFetch', cart);
+        const { version, id } = cart;
 
-          const updatedCart = await updateCart(filmId, variantId, 'add', id, version);
-          setCart(updatedCart);
-          console.log(cart);
-          console.log('afterEffect2', cart);
-        }
-        console.log('CAAAART', newCart);
+        await updateCart(filmId, variantId, 'add', id, version);
       } else {
-        const currentCart = cart;
-
-        const { version, id, lineItems } = currentCart;
+        const cart = await fetchCart(cartID);
+        const { id, lineItems, version } = cart;
 
         const picked = lineItems.find((film) => film.productId === filmId);
 
         let updatedCart;
         if (picked) {
-          updatedCart = await updateCart(picked.id, variantId, 'remove', id, version);
+          await updateCart(picked.id, variantId, 'remove', id, version);
         } else {
           updatedCart = await updateCart(filmId, variantId, 'add', id, version);
         }
-        setCart(updatedCart);
+        console.log('updated', updatedCart);
       }
     }
   };

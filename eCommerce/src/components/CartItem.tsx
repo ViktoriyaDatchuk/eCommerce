@@ -1,19 +1,52 @@
+import { LineItem } from '@commercetools/platform-sdk';
+import { useState } from 'react';
+
+import apiRoot from '../sdk/apiRoot';
+import removeFromCart from '../user/removeFromCat';
 import Button from './Button';
+import LoadingModal from './LoadingModal';
 
 interface CartItemProps {
+  id: string;
   imgLink: string;
   name: string;
   priceValue: string;
   discountedPrice: string;
   totalPrice: string;
+  setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
 }
 const priceStyle = 'text-decoration-line: line-through text-orange-400';
 const controlsStyle = 'text-orange-400 text-2xl';
 const discountPriceStyle = 'text-red-500';
 const labelStyle = 'text-teal-400 text-2xl';
-export default function CartItem({ imgLink, name, priceValue, discountedPrice, totalPrice }: CartItemProps) {
+export default function CartItem({
+  id,
+  imgLink,
+  name,
+  priceValue,
+  discountedPrice,
+  totalPrice,
+  setLineItems,
+}: CartItemProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const removeMovie = async () => {
+    setIsLoading(true);
+    const cartID = localStorage.getItem('cartID');
+    if (cartID) {
+      const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
+      const { version } = currentCart.body;
+      const update = await removeFromCart(id, cartID, version);
+      const { lineItems } = update;
+      localStorage.setItem('lineItems', JSON.stringify(lineItems));
+      const savedLineItems = localStorage.getItem('lineItems');
+      if (savedLineItems && setLineItems) {
+        setLineItems(JSON.parse(savedLineItems));
+      }
+    }
+  };
   return (
     <div className="flex flex-col justify-center items-center sm:flex-row flex-wrap">
+      {isLoading && <LoadingModal />}
       <img
         src={imgLink}
         alt=""
@@ -46,7 +79,7 @@ export default function CartItem({ imgLink, name, priceValue, discountedPrice, t
           </div>
         </div>
         <div className="min-w-42">
-          <Button text="Remove disc" isPrimary={false} addClass="max-h-10 bg-pink-600" />
+          <Button text="Remove disc" isPrimary={false} onClick={removeMovie} addClass="max-h-10 bg-pink-600" />
         </div>
       </div>
     </div>
