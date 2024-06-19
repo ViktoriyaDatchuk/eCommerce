@@ -6,7 +6,7 @@ export default function AboutUs() {
   const pageStyle = 'flex flex-col w-full items-center text-teal-400 gap-1';
   const teamContainerStyle = 'flex justify-between my-6 mx-6 flex-col md:flex-row';
   const svgStyle =
-    'hover:invert-[.27] hover:sepia-[.84] hover:saturate-[34.75] hover:hue-rotate-[328deg] hover:brightness-[1.02] hover:contrast-[.98]';
+    'w-16 hover:brightness-0 hover:contrast-100 hover:invert-[.82] hover:sepia-[.85] hover:saturate-[7367%] hover:hue-rotate-[116deg] hover:brightness-[89%] hover:contrast-[81%]';
 
   return (
     <Page>
@@ -27,7 +27,7 @@ export default function AboutUs() {
           ))}
         </div>
         <a className="self-end mr-2 mb-2" href="https://rs.school/" target="_blank" rel="noreferrer">
-          <img className={svgStyle} src="/github.svg" alt="github" />
+          <img className={svgStyle} src="/rs_school.svg" alt="github" />
         </a>
       </div>
     </Page>
