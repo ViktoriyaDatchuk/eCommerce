@@ -7,6 +7,7 @@ import { UserDataLocalStorage } from '../interfaces/userData.interface';
 import createCard from '../utils/createCart';
 import AddMovieModal from '../pages/Collection/MovieModal';
 import apiRoot from '../sdk/apiRoot';
+import LoadingModal from './LoadingModal';
 
 interface CardProps {
   filmId: string;
@@ -41,6 +42,7 @@ export default function Product({
 }: CardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAddMovieToCard, setIsAddMovieToCard] = useState(isPicked || false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userRequest = localStorage.getItem('commercetools_user');
 
@@ -56,6 +58,7 @@ export default function Product({
 
   const addToCard = async () => {
     setIsOpen(true);
+    setIsLoading(true);
     const cartID = localStorage.getItem('cartID');
 
     if (userRequest) {
@@ -85,6 +88,7 @@ export default function Product({
         console.log('updated', updatedCart);
       }
     }
+    setIsLoading(false);
   };
 
   const buttonText = !isAddMovieToCard ? 'Add to cart' : 'Remove movie';
@@ -93,6 +97,7 @@ export default function Product({
   return (
     <div className={cardStyle}>
       {!userRequest && isOpen && <AddMovieModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />}
+      {isLoading && <LoadingModal />}
       <div style={{ height: '480px', marginBottom: '10px' }}>
         <img
           className={imageStyle}
