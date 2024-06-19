@@ -11,4 +11,7 @@ export default async function createCard(customerId: string) {
     })
     .execute();
   localStorage.setItem('cartID', newCart.body.id);
+  console.log('newCart', newCart);
+
+  return newCart.body;
 }

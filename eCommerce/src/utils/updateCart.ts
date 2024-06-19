@@ -11,8 +11,10 @@ export default async function updateCart(
   version: number
 ) {
   if (action === 'add') {
-    await addToCart(cartId, productId, variantId, version);
+    const updated = await addToCart(cartId, productId, variantId, version);
+    return updated;
   } else {
-    await removeFromCart(productId, cartId, version);
+    const updated = await removeFromCart(productId, cartId, version);
+    return updated;
   }
 }

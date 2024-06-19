@@ -19,4 +19,5 @@ export default async function removeFromCart(lineItemId: string, cartID: string,
   console.log('Product removed from cart:', remove.body.version);
   const { lineItems } = remove.body;
   localStorage.setItem('lineItems', JSON.stringify(lineItems));
+  return remove.body;
 }

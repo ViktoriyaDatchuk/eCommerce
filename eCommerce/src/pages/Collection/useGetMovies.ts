@@ -5,13 +5,13 @@ const LIMIT = 5;
 
 const fetchProductsPage = async (limit: number, offset: number) => {
   const response = await apiRoot.products().get({ queryArgs: { limit, offset } }).execute();
-
+  console.log('fetchProductsPage');
   return response.body;
 };
 
 const fetchMovies = async ({ pageParam = 0 }) => {
   const res = await fetchProductsPage(LIMIT, pageParam);
-
+  console.log('fetchMovies');
   return res;
 };
 

@@ -47,8 +47,9 @@ export default function SignInForm() {
 
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormSignIn> = (data) => {
-    signInUser(data, setEmailError, setPasswordError, navigate);
+  const onSubmit: SubmitHandler<FormSignIn> = async (data) => {
+    await signInUser(data, setEmailError, setPasswordError, navigate);
+    console.log('afterSUbmit!');
   };
 
   return (

@@ -12,8 +12,12 @@ interface CartProps {
 export default function Cart({ lineItems, setLineItems }: CartProps) {
   useEffect(() => {
     const savedLineItems = localStorage.getItem('lineItems');
-    if (savedLineItems && setLineItems) {
-      setLineItems(JSON.parse(savedLineItems));
+    if (setLineItems) {
+      if (savedLineItems) {
+        setLineItems(JSON.parse(savedLineItems));
+      } else {
+        setLineItems([]);
+      }
     }
   }, [setLineItems]);
 
