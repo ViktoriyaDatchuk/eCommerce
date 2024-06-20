@@ -19,13 +19,13 @@ export default async function addToCart(
     .withId({ ID: cartID })
     .post({
       body: {
-        version,
         actions: [
           {
             action: 'addLineItem',
             ...lineItemDraft,
           },
         ],
+        version,
       },
     })
     .execute();

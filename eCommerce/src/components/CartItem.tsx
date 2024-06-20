@@ -1,4 +1,10 @@
+import { useState } from 'react';
+import { UserDataLocalStorage } from '../interfaces/userData.interface';
+import apiRoot from '../sdk/apiRoot';
+import addToCart from '../user/addToCart';
+import createCard from '../utils/createCart';
 import Button from './Button';
+// import removeFromCart from '../user/removeFromCat';
 
 interface CartItemProps {
   imgLink: string;
@@ -6,12 +12,57 @@ interface CartItemProps {
   priceValue: string;
   discountedPrice: string;
   totalPrice: string;
+  quantity: number;
+  productId: string;
+  variantId: number;
 }
 const priceStyle = 'text-decoration-line: line-through text-orange-400';
 const controlsStyle = 'text-orange-400 text-2xl';
 const discountPriceStyle = 'text-red-500';
 const labelStyle = 'text-teal-400 text-2xl';
-export default function CartItem({ imgLink, name, priceValue, discountedPrice, totalPrice }: CartItemProps) {
+
+export default function CartItem({
+  imgLink,
+  name,
+  priceValue,
+  discountedPrice,
+  totalPrice,
+  quantity,
+  productId,
+  variantId,
+}: CartItemProps) {
+  const [quantityItem, setQuantityItem] = useState(quantity);
+  const cartID = localStorage.getItem('cartID');
+  const userRequest = localStorage.getItem('commercetools_user');
+
+  const decreaseNumber = async () => {
+    // if (!cartID) {
+    //   if (!userRequest) return;
+    //   const user: UserDataLocalStorage = JSON.parse(userRequest);
+    //   await createCard(user.id);
+    // } else {
+    //   const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
+    //   const { version, id } = currentCart.body;
+    //   setQuantityItem(quantity);
+    //   removeFromCart(id, productId, variantId, version, 1);
+    // }
+  };
+
+  const increaseNumber = async () => {
+    if (!cartID) {
+      if (!userRequest) return;
+
+      const user: UserDataLocalStorage = JSON.parse(userRequest);
+      await createCard(user.id);
+    } else {
+      const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
+      const { version, id } = currentCart.body;
+      setQuantityItem(quantity);
+      addToCart(id, productId, variantId, version, 1);
+    }
+  };
+  console.log(quantity);
+
   return (
     <div className="flex flex-col justify-center items-center sm:flex-row flex-wrap">
       <img
@@ -33,9 +84,13 @@ export default function CartItem({ imgLink, name, priceValue, discountedPrice, t
           <div>
             <p className={labelStyle}>quantity</p>
             <div className={controlsStyle} style={{ margin: '20px 0' }}>
-              <button type="button">-</button>
-              <span className="mx-4">1</span>
-              <button type="button">+</button>
+              <button type="button" onClick={decreaseNumber}>
+                -
+              </button>
+              <span className="mx-4">{quantityItem}</span>
+              <button type="button" onClick={increaseNumber}>
+                +
+              </button>
             </div>
           </div>
           <div>

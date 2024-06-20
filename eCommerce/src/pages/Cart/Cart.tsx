@@ -16,6 +16,7 @@ export default function Cart({ lineItems, setLineItems }: CartProps) {
       setLineItems(JSON.parse(savedLineItems));
     }
   }, [setLineItems]);
+  console.log(lineItems);
 
   return (
     <Page setLineItems={setLineItems}>
@@ -30,6 +31,9 @@ export default function Cart({ lineItems, setLineItems }: CartProps) {
               priceValue={`${item.price.value.centAmount / 100}`}
               discountedPrice={`${item.price.discounted?.value.centAmount ? item.price.discounted.value.centAmount / 100 : 'No discount'}`}
               totalPrice={`${item.totalPrice.centAmount / 100}`}
+              quantity={item.quantity}
+              productId={item.productId}
+              variantId={item.variant.id}
             />
           ))
         ) : (
