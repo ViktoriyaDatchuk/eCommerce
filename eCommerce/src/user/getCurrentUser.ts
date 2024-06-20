@@ -14,6 +14,7 @@ export async function getCurrentUser() {
       .get()
       .execute()
       .then((response) => {
+        console.log('user!', response.body);
         return response.body;
       })
       .catch((error) => console.error('Error fetching user data:', error));

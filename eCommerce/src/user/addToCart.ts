@@ -34,5 +34,5 @@ export default async function addToCart(
 
   localStorage.setItem('lineItems', JSON.stringify(lineItems));
 
-  return response;
+  return response.body;
 }

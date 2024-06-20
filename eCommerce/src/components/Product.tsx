@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from './Button';
 import updateCart from '../utils/updateCart';
@@ -7,11 +7,7 @@ import { UserDataLocalStorage } from '../interfaces/userData.interface';
 import createCard from '../utils/createCart';
 import AddMovieModal from '../pages/Collection/MovieModal';
 import apiRoot from '../sdk/apiRoot';
-
-// import findCustomerCart from '../utils/findCustomerCart';
-
-// import createOrGetCart from '../user/createCart';
-// import apiRoot from '../sdk/apiRoot';
+import LoadingModal from './LoadingModal';
 
 interface CardProps {
   filmId: string;
@@ -22,6 +18,7 @@ interface CardProps {
   price: number;
   discountPrice: number;
   variantId: number;
+  isPicked?: boolean;
 }
 
 const cardStyle = 'w-80 rounded-md bg-slate-400/10 pb-3 hover:shadow-md hover:shadow-teal-400 hover:cursor-pointer';
@@ -41,43 +38,66 @@ export default function Product({
   price,
   discountPrice,
   variantId,
+  isPicked,
 }: CardProps) {
-  const [isAddMovieToCard, setIsAddMovieToCard] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isAddMovieToCard, setIsAddMovieToCard] = useState(isPicked || false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const userRequest = localStorage.getItem('commercetools_user');
-  const cartID = localStorage.getItem('cartID');
+
+  const fetchCart = async (cartId: string) => {
+    const currentCart = await apiRoot.carts().withId({ ID: cartId }).get().execute();
+
+    return currentCart.body;
+  };
+
+  useEffect(() => {
+    if (isPicked !== undefined) setIsAddMovieToCard(isPicked);
+  }, [isPicked]);
 
   const addToCard = async () => {
     setIsOpen(true);
+    setIsLoading(true);
+    const cartID = localStorage.getItem('cartID');
 
     if (userRequest) {
       setIsAddMovieToCard((prevState) => !prevState);
+      console.log('cartID', cartID);
       if (!cartID) {
-        if (!userRequest) return;
-
         const user: UserDataLocalStorage = JSON.parse(userRequest);
-        await createCard(user.id);
+
+        const newCart = await createCard(user.id);
+        const cart = await fetchCart(newCart.id);
+        console.log('cartFetch', cart);
+        const { version, id } = cart;
+
+        await updateCart(filmId, variantId, 'add', id, version);
       } else {
-        const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
-        const { version, id, lineItems } = currentCart.body;
+        const cart = await fetchCart(cartID);
+        const { id, lineItems, version } = cart;
 
         const picked = lineItems.find((film) => film.productId === filmId);
 
+        let updatedCart;
         if (picked) {
           await updateCart(picked.id, variantId, 'remove', id, version);
         } else {
-          await updateCart(filmId, variantId, 'add', id, version);
+          updatedCart = await updateCart(filmId, variantId, 'add', id, version);
         }
+        console.log('updated', updatedCart);
       }
     }
-
-    // updateCart(filmId, variantId, 'remove');
+    setIsLoading(false);
   };
+
+  const buttonText = !isAddMovieToCard ? 'Add to cart' : 'Remove movie';
+  const buttonClass = `max-w-40 w-full ${isAddMovieToCard ? 'bg-pink-600' : 'bg-orange-600'}`;
 
   return (
     <div className={cardStyle}>
       {!userRequest && isOpen && <AddMovieModal isOpenModal={isOpen} setIsOpenModal={setIsOpen} />}
+      {isLoading && <LoadingModal />}
       <div style={{ height: '480px', marginBottom: '10px' }}>
         <img
           className={imageStyle}
@@ -97,12 +117,7 @@ export default function Product({
             <span className={discountPriceStyle}>€ {discountPrice}</span>
           </div>
         </div>
-        <Button
-          text={!isAddMovieToCard ? 'Add to cart' : 'Remove movie'}
-          isPrimary={false}
-          onClick={addToCard}
-          addClass={`max-w-40 w-full  ${isAddMovieToCard ? 'bg-pink-600' : 'bg-orange-600'}`}
-        />
+        <Button text={buttonText} isPrimary={false} onClick={addToCard} addClass={buttonClass} />
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ import CartLogo from '../CartLogo';
 import getMoviesFromCart from '../../../pages/Cart/getMoviesFromCart';
 
 interface LogInProps {
+  amount?: number;
   setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
 }
 
-export default function LogIn({ setLineItems }: LogInProps) {
+export default function LogIn({ setLineItems, amount }: LogInProps) {
   const navigate = useNavigate();
 
   const logout = () => {
@@ -25,10 +26,10 @@ export default function LogIn({ setLineItems }: LogInProps) {
 
   const getCart = async () => {
     navigate('/cart');
-    const lineItems = await getMoviesFromCart();
+    const items = await getMoviesFromCart();
 
-    if (lineItems && setLineItems) {
-      setLineItems(lineItems);
+    if (items && setLineItems) {
+      setLineItems(items);
     }
   };
 
@@ -38,7 +39,8 @@ export default function LogIn({ setLineItems }: LogInProps) {
 
   return (
     <>
-      <CartLogo onClick={getCart} />
+      {amount ? <CartLogo amount={amount} onClick={getCart} /> : <CartLogo onClick={getCart} />}
+
       <div className="min-w-20">
         <Button
           text={`${user.firstName} ${user.lastName}`}
