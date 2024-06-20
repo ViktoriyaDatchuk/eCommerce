@@ -1,10 +1,12 @@
 import { LineItem } from '@commercetools/platform-sdk';
 import { useState } from 'react';
 
+import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import apiRoot from '../sdk/apiRoot';
 import removeFromCart from '../user/removeFromCat';
 import Button from './Button';
 import LoadingModal from './LoadingModal';
+import EditButton from './EditButton';
 
 interface CartItemProps {
   id: string;
@@ -13,6 +15,7 @@ interface CartItemProps {
   priceValue: string;
   discountedPrice: string;
   totalPrice: string;
+  quantity: number;
   setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
 }
 const priceStyle = 'text-decoration-line: line-through text-orange-400';
@@ -26,12 +29,15 @@ export default function CartItem({
   priceValue,
   discountedPrice,
   totalPrice,
+  quantity,
   setLineItems,
 }: CartItemProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const cartID = localStorage.getItem('cartID');
+
   const removeMovie = async () => {
     setIsLoading(true);
-    const cartID = localStorage.getItem('cartID');
+
     if (cartID) {
       const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
       const { version } = currentCart.body;
@@ -41,6 +47,55 @@ export default function CartItem({
       const savedLineItems = localStorage.getItem('lineItems');
       if (savedLineItems && setLineItems) {
         setLineItems(JSON.parse(savedLineItems));
+      }
+    }
+  };
+
+  const editQuantity = async (act: string) => {
+    if (cartID) {
+      const currentCart = await apiRoot.carts().withId({ ID: cartID }).get().execute();
+      const { version, lineItems } = currentCart.body;
+
+      const currentQuantity = lineItems.find((movie) => movie.id === id);
+      console.log('up?', currentCart);
+      if (currentQuantity) {
+        // const { quantity } = currentQuantity;
+
+        let newQuantity = currentQuantity.quantity;
+
+        if (act === 'up') {
+          console.log('UP +1');
+          newQuantity = currentQuantity.quantity + 1;
+        } else if (currentQuantity.quantity > 1) {
+          console.log('UP -1');
+          newQuantity = currentQuantity.quantity - 1;
+        }
+
+        const response = await apiRoot
+          .carts()
+          .withId({ ID: cartID })
+          .post({
+            body: {
+              version,
+              actions: [
+                {
+                  action: 'changeLineItemQuantity',
+                  lineItemId: id,
+                  quantity: newQuantity,
+                },
+              ],
+            },
+          })
+          .execute();
+        const updatedCart = response.body;
+        const newLineItems = updatedCart.lineItems;
+        console.log('newCart', updatedCart);
+
+        localStorage.setItem('lineItems', JSON.stringify(newLineItems));
+        const savedLineItems = localStorage.getItem('lineItems');
+        if (savedLineItems && setLineItems) {
+          setLineItems(JSON.parse(savedLineItems));
+        }
       }
     }
   };
@@ -66,9 +121,9 @@ export default function CartItem({
           <div>
             <p className={labelStyle}>quantity</p>
             <div className={controlsStyle} style={{ margin: '20px 0' }}>
-              <button type="button">-</button>
-              <span className="mx-4">1</span>
-              <button type="button">+</button>
+              <EditButton icon={faMinus} onClick={() => editQuantity('down')} />
+              <span className="mx-4">{quantity}</span>
+              <EditButton icon={faPlus} onClick={() => editQuantity('up')} />
             </div>
           </div>
           <div>
