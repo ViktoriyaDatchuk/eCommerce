@@ -66,8 +66,20 @@ export default function SignUp() {
   const [isSameAddress, setIsSameAddress] = useState(false);
   const [SignUpError, setSignUpError] = useState(false);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    sighUpUser(data, isDefaultAddress, isSameAddress, navigate, setSignUpError);
+  // const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+  //   await sighUpUser(data, isDefaultAddress, isSameAddress, navigate, setSignUpError);
+  //   console.log('afterSUbmit!');
+  // };
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    const formData = {
+      ...data,
+      country: countryList.find((cntr) => cntr.iso === data.country)?.country,
+    };
+
+    console.log('Form data before submit:', formData);
+
+    await sighUpUser(data, isDefaultAddress, isSameAddress, navigate, setSignUpError);
+    console.log('afterSubmit!');
   };
 
   const THIRTEEN_YEARS = 31536000000 * 13;

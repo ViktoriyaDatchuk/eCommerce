@@ -1,9 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { LineItem } from '@commercetools/platform-sdk';
 import Button from '../Button';
 import Logo from './Logo';
 import Profil from './Profil/Profil';
 
-export default function Header() {
+interface HeaderProps {
+  amount?: number;
+  setLineItems?: React.Dispatch<React.SetStateAction<LineItem[]>>;
+}
+
+export default function Header({ setLineItems, amount }: HeaderProps) {
   const navigate = useNavigate();
 
   return (
@@ -12,7 +18,10 @@ export default function Header() {
         <Logo onClick={() => navigate('/')} />
         <Button text="find a movie" isPrimary={false} onClick={() => navigate('/movie-collection')} />
       </div>
-      <Profil />
+      <button type="button" className="text-[#FEA732]" onClick={() => navigate('/about-us')}>
+        About us
+      </button>
+      {setLineItems && amount ? setLineItems && <Profil amount={amount} setLineItems={setLineItems} /> : <Profil />}
     </header>
   );
 }
