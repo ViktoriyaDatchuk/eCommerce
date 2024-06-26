@@ -100,25 +100,21 @@ export default function CartItem({
     }
   };
   return (
-    <div className="flex flex-col justify-center items-center sm:flex-row flex-wrap">
+    <div className="flex flex-col justify-center items-center sm:flex-row flex-wrap gap-5">
       {isLoading && <LoadingModal />}
       <img
         src={imgLink}
         alt=""
         style={{ height: '240px', width: '160px', aspectRatio: '3/4', borderRadius: '10px', objectFit: 'cover' }}
       />
-      <div className="max-w-4xl w-full flex flex-wrap justify-center gap-5 sm:gap-10">
-        <div className={`max-w-60 w-full ${labelStyle}`}>
-          <div className="w-full flex justify-center items-center gap-10">
-            <p className=" uppercase">{name}</p>
-            <div style={{ margin: '20px 0' }}>
-              <p className={priceStyle}>€{priceValue}</p>
-              <p className={discountPriceStyle}>€{discountedPrice}</p>
-            </div>
-          </div>
+      <div className="max-w-4xl w-full flex flex-wrap justify-center items-center  gap-5 sm:gap-10">
+        <p className={`max-w-40 w-full text-lg uppercase ${labelStyle}`}>{name}</p>
+        <div className={`max-w-60 w-full flex justify-center items-center gap-10 ${labelStyle}`}>
+          <p className={priceStyle}>€{priceValue}</p>
+          <p className={discountPriceStyle}>€{discountedPrice}</p>
         </div>
         <div className="min-w-52 flex gap-5">
-          <div>
+          <div className="flex flex-col justify-center">
             <p className={labelStyle}>quantity</p>
             <div className={controlsStyle} style={{ margin: '20px 0' }}>
               <EditButton icon={faMinus} onClick={() => editQuantity('down')} />
@@ -134,7 +130,7 @@ export default function CartItem({
           </div>
         </div>
         <div className="min-w-42">
-          <Button text="Remove disc" isPrimary={false} onClick={removeMovie} addClass="max-h-10 bg-pink-600" />
+          <Button text="Remove disc" isPrimary={false} onClick={removeMovie} />
         </div>
       </div>
     </div>

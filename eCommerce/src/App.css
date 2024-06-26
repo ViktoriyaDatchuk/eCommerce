@@ -28,7 +28,6 @@ body {
 .swal-modal {
   background-color: #111827;
   max-width: 300px;
-  width: 100%;
 }
 
 .swal-modal ::before {

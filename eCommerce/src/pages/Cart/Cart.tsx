@@ -1,9 +1,13 @@
 import { LineItem } from '@commercetools/platform-sdk';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import CartItem from '../../components/CartItem';
 import Page from '../../components/Page';
 import apiRoot from '../../sdk/apiRoot';
+
+import { IFormInput } from '../SignUp';
+import Button from '../../components/Button';
 
 interface CartProps {
   lineItems?: LineItem[];
@@ -45,14 +49,40 @@ export default function Cart({ lineItems, setLineItems }: CartProps) {
 
   const amount = lineItems ? lineItems.length : 0;
 
+  const addPromo = (e: Event) => {
+    e.preventDefault();
+    console.log('add promo');
+  };
+
+  const { handleSubmit } = useForm<Partial<IFormInput>>({});
+  const [inputValue, setInputValue] = useState('');
+
   return (
     <Page amount={amount} setLineItems={setLineItems}>
       <div className="flex flex-col mt-20 gap-10">
         <h1 className=" text-2xl font-bold text-orange-400">Your movies</h1>
-        <h2 className="text-lg font-bold text-orange-400">
-          Total price: {totalPrice} €
-          <span />
-        </h2>
+        <div className="flex flex-wrap justify-between items-center">
+          <form onSubmit={handleSubmit(() => addPromo)} className="flex flex-wrap justify-center items-center gap-5">
+            <label htmlFor="promo" className="flex flex-col">
+              <input
+                className="h-6 px-1 rounded-sm"
+                type="text"
+                id="promo"
+                placeholder="Enter promo"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+            </label>
+            <Button text="add promo" isPrimary submit />
+          </form>
+          <h2 className="text-2xl uppercase font-bold text-orange-400">
+            Total price: {totalPrice} €
+            <span />
+          </h2>
+        </div>
+        <div className="flex justify-end">
+          <Button text="remove all movies" isPrimary />
+        </div>
         {lineItems && lineItems.length > 0 ? (
           lineItems.map((item) => (
             <CartItem
